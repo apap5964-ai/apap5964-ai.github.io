@@ -516,6 +516,29 @@
         .glass-card {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* Всплывающее уведомление */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #6a4eff, #a855f7);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(106,78,255,0.5);
+            animation: toastFade 2s ease-out forwards;
+        }
+
+        @keyframes toastFade {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
     </style>
 </head>
 <body>
@@ -537,7 +560,7 @@
     <input type="range" id="glowIntensity" min="0" max="1.5" step="0.1" value="1">
     <label>Цветовая схема:</label>
     <select id="colorScheme">
-        <option value="neon">🌈 Неоновая</option>
+        <option value="neon" selected>🌈 Неоновая</option>
         <option value="blue">💙 Синяя</option>
         <option value="purple">💜 Фиолетовая</option>
         <option value="pink">💗 Розовая</option>
@@ -660,102 +683,71 @@
     <div id="tab-codes" class="glass-card" style="display: none;">
         <h2 style="margin-bottom: 20px; text-align: center;">🔑 ДОСТУПНЫЕ КЛЮЧИ АКТИВАЦИИ</h2>
         <div class="codes-grid">
-            <div class="code-item" onclick="copyToClipboard('AmbiLEGENDA')">🏆 AmbiLEGENDA</div>
-            <div class="code-item" onclick="copyToClipboard('AmbiLOX')">🦊 AmbiLOX</div>
-            <div class="code-item" onclick="copyToClipboard('AmbiKingII')">👑 AmbiKingII</div>
-            <div class="code-item" onclick="copyToClipboard('XD')">😆 XD</div>
-            <div class="code-item" onclick="copyToClipboard('xD')">😜 xD</div>
-            <div class="code-item" onclick="copyToClipboard('RONALDO')">⚽ RONALDO</div>
-            <div class="code-item" onclick="copyToClipboard('SU')">🇷🇺 SU</div>
+            <div class="code-item" data-code="AmbiLEGENDA">🏆 AmbiLEGENDA</div>
+            <div class="code-item" data-code="AmbiLOX">🦊 AmbiLOX</div>
+            <div class="code-item" data-code="AmbiKingII">👑 AmbiKingII</div>
+            <div class="code-item" data-code="XD">😆 XD</div>
+            <div class="code-item" data-code="xD">😜 xD</div>
+            <div class="code-item" data-code="RONALDO">⚽ RONALDO</div>
+            <div class="code-item" data-code="SU">🇷🇺 SU</div>
         </div>
         <p style="text-align: center; margin-top: 20px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
 </div>
 
 <script>
+    // Функция уведомления
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+
     // Копирование в буфер обмена
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
-            const notification = document.createElement('div');
-            notification.textContent = `✅ Ключ "${text}" скопирован!`;
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.background = 'linear-gradient(135deg, #6a4eff, #a855f7)';
-            notification.style.color = 'white';
-            notification.style.padding = '12px 24px';
-            notification.style.borderRadius = '50px';
-            notification.style.zIndex = '1000';
-            notification.style.fontWeight = 'bold';
-            notification.style.boxShadow = '0 0 20px rgba(106,78,255,0.5)';
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 2000);
+            showToast(`✅ Ключ "${text}" скопирован!`);
         });
     }
 
-    // Создаем неоновые шары
-    function createNeonBalls() {
-        const container = document.getElementById('neon-balls');
-        const colors = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
-        
-        for (let i = 0; i < 20; i++) {
-            const ball = document.createElement('div');
-            ball.className = 'neon-ball';
-            const size = 120 + Math.random() * 300;
-            ball.style.width = size + 'px';
-            ball.style.height = size + 'px';
-            ball.style.left = Math.random() * 100 + '%';
-            ball.style.top = Math.random() * 100 + '%';
-            ball.style.background = colors[Math.floor(Math.random() * colors.length)];
-            ball.style.opacity = 0.08 + Math.random() * 0.15;
-            ball.style.animationDelay = Math.random() * 5 + 's';
-            ball.style.animationDuration = 10 + Math.random() * 10 + 's';
-            container.appendChild(ball);
-        }
-    }
+    // Настройка кликов по кодам
+    document.querySelectorAll('.code-item').forEach(el => {
+        el.addEventListener('click', () => {
+            const code = el.getAttribute('data-code');
+            copyToClipboard(code);
+        });
+    });
 
-    // Создаем частицы
-    function createParticles() {
-        const container = document.getElementById('particles');
-        for (let i = 0; i < 100; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 8 + 's';
-            particle.style.animationDuration = 4 + Math.random() * 6 + 's';
-            particle.style.width = (2 + Math.random() * 4) + 'px';
-            particle.style.height = particle.style.width;
-            container.appendChild(particle);
-        }
+    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ (через localStorage + имитация API)
+    let downloadCount = localStorage.getItem('ambix_downloads');
+    if (!downloadCount) {
+        downloadCount = 3137;
+        localStorage.setItem('ambix_downloads', downloadCount);
+    } else {
+        downloadCount = parseInt(downloadCount);
     }
-
-    // Создаем звезды
-    function createStars() {
-        const container = document.getElementById('stars');
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 4 + 's';
-            star.style.animationDuration = (2 + Math.random() * 4) + 's';
-            container.appendChild(star);
-        }
-    }
-
-    // Счетчик скачиваний
-    let downloadCount = 2048;
-    const downloadBtn = document.getElementById('downloadBtn');
-    const downloadCountEl = document.getElementById('downloadCount');
     
+    const downloadCountEl = document.getElementById('downloadCount');
     downloadCountEl.textContent = downloadCount.toLocaleString();
 
+    // Кнопка скачивания
+    const downloadBtn = document.getElementById('downloadBtn');
+    
     downloadBtn.addEventListener('click', function(e) {
+        // Увеличиваем счетчик
         downloadCount++;
         downloadCountEl.textContent = downloadCount.toLocaleString();
-        localStorage.setItem('downloadCount', downloadCount);
+        localStorage.setItem('ambix_downloads', downloadCount);
         
+        // Отправляем статистику на сервер (опционально)
+        fetch('https://api.countapi.xyz/hit/ambixloader/downloads', {
+            method: 'GET',
+            mode: 'no-cors'
+        }).catch(() => {});
+        
+        // Анимация
         this.style.transform = 'scale(0.95)';
         setTimeout(() => {
             this.style.transform = 'scale(1.05)';
@@ -763,22 +755,132 @@
         setTimeout(() => {
             this.style.transform = 'scale(1)';
         }, 300);
+        
+        // Показываем уведомление
+        showToast('⬇️ Скачивание началось!');
     });
 
-    const savedCount = localStorage.getItem('downloadCount');
-    if (savedCount) {
-        downloadCount = parseInt(savedCount);
-        downloadCountEl.textContent = downloadCount.toLocaleString();
-    }
-
-    // Настройки
+    // Настройки (дефолтные значения)
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed');
     const glowIntensitySlider = document.getElementById('glowIntensity');
     const colorScheme = document.getElementById('colorScheme');
-    const gradientBg = document.getElementById('gradientBg');
 
+    // Загрузка сохраненных настроек
+    const savedSpeed = localStorage.getItem('ambix_anim_speed');
+    const savedGlow = localStorage.getItem('ambix_glow_intensity');
+    const savedColor = localStorage.getItem('ambix_color_scheme');
+    
+    if (savedSpeed) animSpeed.value = savedSpeed;
+    if (savedGlow) glowIntensitySlider.value = savedGlow;
+    if (savedColor) colorScheme.value = savedColor;
+
+    // Применение настроек при загрузке
+    function applyAnimSpeed(speed) {
+        document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => {
+            const currentAnim = getComputedStyle(el).animationName;
+            if (currentAnim === 'float') {
+                el.style.animationDuration = (15 * (2 / speed)) + 's';
+            } else if (currentAnim === 'particleFloat') {
+                el.style.animationDuration = (6 * (2 / speed)) + 's';
+            } else if (currentAnim === 'twinkle') {
+                el.style.animationDuration = (4 * (2 / speed)) + 's';
+            }
+        });
+        document.querySelectorAll('.cheat-icon').forEach(el => {
+            el.style.animationDuration = (2 * (2 / speed)) + 's';
+        });
+        document.querySelectorAll('.glass-card').forEach(el => {
+            el.style.transitionDuration = (0.3 * (1 / speed)) + 's';
+        });
+    }
+
+    function applyGlowIntensity(intensity) {
+        const boxShadowIntensity = 0.3 * intensity;
+        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => {
+            el.style.boxShadow = `0 0 ${20 * intensity}px rgba(106, 78, 255, ${boxShadowIntensity})`;
+        });
+    }
+
+    function applyColorScheme(scheme) {
+        let primary, secondary, r, g, b;
+        switch(scheme) {
+            case 'blue':
+                primary = '#3b82f6';
+                secondary = '#06b6d4';
+                r = 59; g = 130; b = 246;
+                break;
+            case 'purple':
+                primary = '#8b5cf6';
+                secondary = '#a855f7';
+                r = 139; g = 92; b = 246;
+                break;
+            case 'pink':
+                primary = '#ec4899';
+                secondary = '#f43f5e';
+                r = 236; g = 72; b = 153;
+                break;
+            case 'green':
+                primary = '#10b981';
+                secondary = '#34d399';
+                r = 16; g = 185; b = 129;
+                break;
+            default:
+                primary = '#6a4eff';
+                secondary = '#a855f7';
+                r = 106; g = 78; b = 255;
+        }
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            .download-btn, .tab-btn.active, .step-number {
+                background: linear-gradient(135deg, ${primary}, ${secondary}) !important;
+            }
+            .glass-card:hover, .cheat-card:hover {
+                border-color: ${primary} !important;
+                box-shadow: 0 0 40px rgba(${r}, ${g}, ${b}, 0.3) !important;
+            }
+            .stat-number, h1 {
+                background: linear-gradient(135deg, ${primary}, ${secondary});
+                -webkit-background-clip: text;
+                background-clip: text;
+            }
+            .settings-panel h3, .code-item:hover {
+                color: ${primary};
+            }
+            .code-item:hover {
+                border-color: ${primary};
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // События настроек
+    animSpeed.addEventListener('input', (e) => {
+        const speed = e.target.value;
+        applyAnimSpeed(speed);
+        localStorage.setItem('ambix_anim_speed', speed);
+    });
+
+    glowIntensitySlider.addEventListener('input', (e) => {
+        const intensity = e.target.value;
+        applyGlowIntensity(intensity);
+        localStorage.setItem('ambix_glow_intensity', intensity);
+    });
+
+    colorScheme.addEventListener('change', (e) => {
+        const scheme = e.target.value;
+        applyColorScheme(scheme);
+        localStorage.setItem('ambix_color_scheme', scheme);
+    });
+
+    // Применяем настройки при загрузке
+    applyAnimSpeed(animSpeed.value);
+    applyGlowIntensity(glowIntensitySlider.value);
+    applyColorScheme(colorScheme.value);
+
+    // Открытие/закрытие панели настроек
     settingsBtn.addEventListener('click', () => {
         settingsPanel.classList.toggle('active');
     });
@@ -790,83 +892,55 @@
         }
     });
 
-    // Скорость анимации
-    animSpeed.addEventListener('input', (e) => {
-        const speed = e.target.value;
-        document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => {
-            const currentAnim = getComputedStyle(el).animation;
-            if (currentAnim.includes('float')) {
-                el.style.animationDuration = (10 * (2 / speed)) + 's';
-            } else if (currentAnim.includes('particleFloat')) {
-                el.style.animationDuration = (6 * (2 / speed)) + 's';
-            } else if (currentAnim.includes('twinkle')) {
-                el.style.animationDuration = (3 * (2 / speed)) + 's';
-            }
-        });
-        document.querySelectorAll('.cheat-icon').forEach(el => {
-            el.style.animationDuration = (2 * (2 / speed)) + 's';
-        });
-    });
-
-    // Интенсивность свечения
-    glowIntensitySlider.addEventListener('input', (e) => {
-        const intensity = e.target.value;
-        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => {
-            el.style.boxShadow = `0 0 ${20 * intensity}px rgba(106, 78, 255, ${0.3 * intensity})`;
-        });
-    });
-
-    // Цветовая схема
-    colorScheme.addEventListener('change', (e) => {
-        const scheme = e.target.value;
-        let primary, secondary, accent;
-        switch(scheme) {
-            case 'blue':
-                primary = '#3b82f6';
-                secondary = '#06b6d4';
-                accent = '#0ea5e9';
-                break;
-            case 'purple':
-                primary = '#8b5cf6';
-                secondary = '#a855f7';
-                accent = '#c084fc';
-                break;
-            case 'pink':
-                primary = '#ec4899';
-                secondary = '#f43f5e';
-                accent = '#fb7185';
-                break;
-            case 'green':
-                primary = '#10b981';
-                secondary = '#34d399';
-                accent = '#6ee7b7';
-                break;
-            default:
-                primary = '#6a4eff';
-                secondary = '#a855f7';
-                accent = '#ec4899';
+    // Создание неоновых шаров
+    function createNeonBalls() {
+        const container = document.getElementById('neon-balls');
+        const colors = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
+        
+        for (let i = 0; i < 25; i++) {
+            const ball = document.createElement('div');
+            ball.className = 'neon-ball';
+            const size = 100 + Math.random() * 300;
+            ball.style.width = size + 'px';
+            ball.style.height = size + 'px';
+            ball.style.left = Math.random() * 100 + '%';
+            ball.style.top = Math.random() * 100 + '%';
+            ball.style.background = colors[Math.floor(Math.random() * colors.length)];
+            ball.style.opacity = 0.05 + Math.random() * 0.15;
+            ball.style.animationDelay = Math.random() * 8 + 's';
+            ball.style.animationDuration = 12 + Math.random() * 12 + 's';
+            container.appendChild(ball);
         }
-        
-        document.documentElement.style.setProperty('--primary', primary);
-        document.documentElement.style.setProperty('--secondary', secondary);
-        
-        const style = document.createElement('style');
-        style.textContent = `
-            .download-btn, .tab-btn.active, .step-number, .code-item:hover {
-                background: linear-gradient(135deg, ${primary}, ${secondary}) !important;
-            }
-            .glass-card:hover, .cheat-card:hover {
-                border-color: ${primary} !important;
-                box-shadow: 0 0 40px rgba(${parseInt(primary.slice(1,3),16)}, ${parseInt(primary.slice(3,5),16)}, ${parseInt(primary.slice(5,7),16)}, 0.3) !important;
-            }
-            .stat-number {
-                background: linear-gradient(135deg, ${primary}, ${secondary});
-                -webkit-background-clip: text;
-                background-clip: text;
-            }
-        `;
-        document.head.appendChild(style);
-    });
+    }
+
+    // Создание частиц
+    function createParticles() {
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 120; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = 4 + Math.random() * 8 + 's';
+            particle.style.width = (1.5 + Math.random() * 4) + 'px';
+            particle.style.height = particle.style.width;
+            container.appendChild(particle);
+        }
+    }
+
+    // Создание звезд
+    function createStars() {
+        const container = document.getElementById('stars');
+        for (let i = 0; i < 250; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            star.style.animationDuration = (2 + Math.random() * 5) + 's';
+            container.appendChild(star);
+        }
+    }
 
     // Переключение табов
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -885,7 +959,7 @@
             btn.classList.add('active');
             
             Object.keys(tabs).forEach(key => {
-                tabs[key].style.display = 'none';
+                if (tabs[key]) tabs[key].style.display = 'none';
             });
             
             if (tabs[tabId]) tabs[tabId].style.display = 'block';
