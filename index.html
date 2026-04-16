@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
         }
 
         body {
@@ -21,7 +20,6 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
-            transition: all 0.3s ease;
         }
 
         /* Анимированный градиентный фон */
@@ -36,7 +34,6 @@
                         radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1), transparent 50%);
             z-index: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
         }
 
         /* Неоновые шары */
@@ -47,7 +44,6 @@
             pointer-events: none;
             z-index: 0;
             animation: float 15s infinite ease-in-out;
-            transition: all 0.3s ease;
         }
 
         @keyframes float {
@@ -109,7 +105,7 @@
             cursor: pointer;
             z-index: 100;
             border: 1px solid rgba(106, 78, 255, 0.3);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 24px;
         }
 
@@ -132,7 +128,7 @@
             z-index: 99;
             border: 1px solid rgba(106, 78, 255, 0.3);
             transform: translateX(400px);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -152,17 +148,7 @@
             opacity: 0.8;
         }
 
-        .settings-panel input {
-            width: 100%;
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid rgba(106, 78, 255, 0.3);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            cursor: pointer;
-        }
-
-        .settings-panel select {
+        .settings-panel input, .settings-panel select {
             width: 100%;
             padding: 8px;
             border-radius: 10px;
@@ -192,6 +178,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card::before {
@@ -215,6 +202,11 @@
             transform: translateY(-5px);
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Заголовок */
         h1 {
             font-size: 4.5rem;
@@ -224,13 +216,18 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 30px rgba(106, 78, 255, 0.3);
-            animation: titleGlow 3s infinite alternate;
+            animation: titleGlow 3s infinite alternate, floatText 4s infinite ease-in-out;
             letter-spacing: 2px;
         }
 
         @keyframes titleGlow {
             0% { text-shadow: 0 0 20px rgba(106, 78, 255, 0.3); }
             100% { text-shadow: 0 0 50px rgba(106, 78, 255, 0.8); }
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .subtitle {
@@ -250,12 +247,18 @@
             text-decoration: none;
             color: white;
             margin: 20px 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(106, 78, 255, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(106, 78, 255, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(106, 78, 255, 0.7); }
         }
 
         .download-btn::before {
@@ -293,7 +296,7 @@
             padding: 12px 35px;
             border-radius: 60px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             color: rgba(255,255,255,0.7);
             backdrop-filter: blur(5px);
@@ -325,14 +328,24 @@
             border-radius: 24px;
             padding: 30px 25px;
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(106, 78, 255, 0.2);
             cursor: pointer;
             backdrop-filter: blur(5px);
+            animation: fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+        }
+
+        .cheat-card:nth-child(1) { animation-delay: 0.1s; }
+        .cheat-card:nth-child(2) { animation-delay: 0.2s; }
+        .cheat-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .cheat-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
             border-color: #6a4eff;
             box-shadow: 0 15px 35px rgba(106, 78, 255, 0.25);
         }
@@ -340,12 +353,12 @@
         .cheat-icon {
             font-size: 3.5rem;
             margin-bottom: 15px;
-            animation: iconPulse 2s infinite;
+            animation: iconBounce 2s infinite;
         }
 
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .cheat-name {
@@ -374,10 +387,36 @@
             border: 1px solid rgba(0,255,100,0.3);
         }
 
+        /* Вкладка ИНФО */
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: rgba(30, 30, 50, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .info-row:hover {
+            background: rgba(50, 50, 80, 0.5);
+            transform: translateX(10px);
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+        }
+
         /* Список кодов */
         .codes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
@@ -389,7 +428,7 @@
             padding: 12px;
             text-align: center;
             font-weight: 700;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
 
@@ -413,7 +452,7 @@
             padding: 15px 20px;
             background: rgba(30, 30, 50, 0.5);
             border-radius: 20px;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
         }
 
@@ -436,14 +475,6 @@
             box-shadow: 0 0 15px rgba(106, 78, 255, 0.5);
         }
 
-        .step-text {
-            flex: 1;
-        }
-
-        .step-text strong {
-            color: #a855f7;
-        }
-
         /* Статистика */
         .stats {
             display: flex;
@@ -459,6 +490,12 @@
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
             backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(106, 78, 255, 0.1);
         }
 
         .stat-number {
@@ -475,50 +512,8 @@
             opacity: 0.7;
         }
 
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .glass-card { padding: 25px; margin: 15px; }
-            .download-btn { padding: 12px 30px; font-size: 1.1rem; }
-            .step { flex-direction: column; text-align: center; }
-            .step-number { margin-bottom: 10px; }
-            .tabs { gap: 10px; }
-            .tab-btn { padding: 8px 20px; font-size: 0.9rem; }
-            .settings-panel { width: 260px; right: 10px; top: 70px; }
-        }
-
-        /* Скроллбар */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0f;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #6a4eff, #a855f7);
-            border-radius: 10px;
-        }
-
-        /* Анимация появления */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .glass-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Всплывающее уведомление */
-        .toast-notification {
+        /* Уведомление */
+        .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -539,6 +534,21 @@
             80% { opacity: 1; transform: translateX(-50%) translateY(0); }
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
         }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .glass-card { padding: 25px; margin: 15px; }
+            .download-btn { padding: 12px 30px; font-size: 1.1rem; }
+            .step { flex-direction: column; text-align: center; }
+            .step-number { margin-bottom: 10px; }
+            .tabs { gap: 10px; }
+            .tab-btn { padding: 8px 20px; font-size: 0.9rem; }
+            .info-row { flex-direction: column; text-align: center; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #6a4eff, #a855f7); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -548,14 +558,12 @@
 <div id="particles"></div>
 <div id="stars"></div>
 
-<!-- Шестеренка настроек -->
 <div class="settings-btn" id="settingsBtn">⚙️</div>
 
-<!-- Панель настроек -->
 <div class="settings-panel" id="settingsPanel">
     <h3>🎨 КАСТОМИЗАЦИЯ</h3>
     <label>Скорость анимации:</label>
-    <input type="range" id="animSpeed" min="0.5" max="2" step="0.1" value="1">
+    <input type="range" id="animSpeed" min="0.3" max="2" step="0.1" value="1">
     <label>Интенсивность свечения:</label>
     <input type="range" id="glowIntensity" min="0" max="1.5" step="0.1" value="1">
     <label>Цветовая схема:</label>
@@ -569,7 +577,6 @@
 </div>
 
 <div class="container">
-    <!-- Заголовок -->
     <div class="glass-card" style="text-align: center;">
         <h1>✦ AMBI LOADER ✦</h1>
         <p class="subtitle">Универсальный загрузчик для CS:GO | Мощно | Быстро | Надёжно</p>
@@ -588,13 +595,12 @@
                 <div class="stat-label">читов</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">∞</div>
+                <div class="stat-number">7+</div>
                 <div class="stat-label">кодов</div>
             </div>
         </div>
     </div>
 
-    <!-- Табы -->
     <div class="tabs">
         <div class="tab-btn active" data-tab="cheats">🎮 ЧИТЫ</div>
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
@@ -602,84 +608,38 @@
         <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
     </div>
 
-    <!-- Вкладка: ЧИТЫ -->
     <div id="tab-cheats" class="glass-card" style="display: block;">
         <div style="text-align: center; margin-bottom: 25px;">
             <h2>🔥 ДОСТУПНЫЕ ЧИТЫ 🔥</h2>
             <p style="opacity: 0.7;">Нажми LOAD в лоудере — всё скачается автоматически</p>
         </div>
         <div class="cheats-grid">
-            <div class="cheat-card">
-                <div class="cheat-icon">🎯</div>
-                <div class="cheat-name">Skeet VAC</div>
-                <div class="cheat-desc">Мощный чит для CS:GO с AIM, ESP и другими функциями</div>
-                <span class="cheat-status">● ДОСТУПЕН</span>
-            </div>
-            <div class="cheat-card">
-                <div class="cheat-icon">🔓</div>
-                <div class="cheat-name">NL Crack</div>
-                <div class="cheat-desc">Neverlose кряк с серверной частью и автоинжектом</div>
-                <span class="cheat-status">● ДОСТУПЕН</span>
-            </div>
-            <div class="cheat-card">
-                <div class="cheat-icon">🌸</div>
-                <div class="cheat-name">Kamidere</div>
-                <div class="cheat-desc">Уникальный чит со встроенным инжектором</div>
-                <span class="cheat-status">● ДОСТУПЕН</span>
-            </div>
+            <div class="cheat-card"><div class="cheat-icon">🎯</div><div class="cheat-name">Skeet VAC</div><div class="cheat-desc">Мощный чит для CS:GO с AIM, ESP и другими функциями</div><span class="cheat-status">● ДОСТУПЕН</span></div>
+            <div class="cheat-card"><div class="cheat-icon">🔓</div><div class="cheat-name">NL Crack</div><div class="cheat-desc">Neverlose кряк с серверной частью и автоинжектом</div><span class="cheat-status">● ДОСТУПЕН</span></div>
+            <div class="cheat-card"><div class="cheat-icon">🌸</div><div class="cheat-name">Kamidere</div><div class="cheat-desc">Уникальный чит со встроенным инжектором</div><span class="cheat-status">● ДОСТУПЕН</span></div>
         </div>
     </div>
 
-    <!-- Вкладка: УСТАНОВКА -->
     <div id="tab-install" class="glass-card" style="display: none;">
         <h2 style="margin-bottom: 25px;">📥 ПОШАГОВАЯ ИНСТРУКЦИЯ</h2>
         <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-text"><strong>Скачай AMBI LOADER</strong><br>Нажми кнопку "Скачать" на этом сайте</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text"><strong>Запусти AMBI LOADER</strong><br>При первом запуске может попросить права администратора</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text"><strong>Введи лицензионный ключ</strong><br>Ключи: AmbiLEGENDA, AmbiLOX, AmbiKingII, XD, xD, RONALDO, SU</div>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-text"><strong>Выбери чит и нажми LOAD</strong><br>Лоудер сам скачает и установит всё необходимое</div>
-            </div>
-            <div class="step">
-                <div class="step-number">5</div>
-                <div class="step-text"><strong>Запускай CS:GO и наслаждайся!</strong><br>Чит автоматически инжектится в игру</div>
-            </div>
+            <div class="step"><div class="step-number">1</div><div class="step-text"><strong>Скачай AMBI LOADER</strong><br>Нажми кнопку "Скачать" на этом сайте</div></div>
+            <div class="step"><div class="step-number">2</div><div class="step-text"><strong>Запусти AMBI LOADER</strong><br>При первом запуске может попросить права администратора</div></div>
+            <div class="step"><div class="step-number">3</div><div class="step-text"><strong>Введи лицензионный ключ</strong><br>Ключи: AmbiLEGENDA, AmbiLOX, AmbiKingII, XD, xD, RONALDO, SU</div></div>
+            <div class="step"><div class="step-number">4</div><div class="step-text"><strong>Выбери чит и нажми LOAD</strong><br>Лоудер сам скачает и установит всё необходимое</div></div>
+            <div class="step"><div class="step-number">5</div><div class="step-text"><strong>Запускай CS:GO и наслаждайся!</strong><br>Чит автоматически инжектится в игру</div></div>
         </div>
     </div>
 
-    <!-- Вкладка: ИНФО -->
     <div id="tab-info" class="glass-card" style="display: none;">
-        <h2 style="margin-bottom: 20px;">ℹ️ О ПРОЕКТЕ</h2>
-        <p style="margin-bottom: 15px; line-height: 1.6;">
-            <strong>AMBI LOADER</strong> — это универсальный загрузчик для CS:GO, который объединяет несколько популярных читов. 
-            Всё, что нужно — скачать лоудер, ввести ключ и нажать LOAD. Дальше программа сама скачает и установит чит.
-        </p>
-        <p style="margin-bottom: 15px; line-height: 1.6;">
-            <strong>🔥 Преимущества:</strong><br>
-            • Автоматическая установка — не нужно ничего искать вручную<br>
-            • Регулярные обновления — читы всегда актуальны<br>
-            • Красивый неоновый интерфейс<br>
-            • Множество ключей для активации
-        </p>
-        <p style="margin-bottom: 15px; line-height: 1.6;">
-            <strong>⚠️ ВАЖНО:</strong><br>
-            • Запускай лоудер от имени администратора<br>
-            • Отключи антивирус или добавь папку в исключения<br>
-            • Используй только для обучения и тестирования
-        </p>
+        <h2 style="margin-bottom: 20px; text-align: center;">ℹ️ О ПРОЕКТЕ</h2>
+        <div class="info-content">
+            <div class="info-row"><div class="info-icon">🚀</div><div><strong>AMBI LOADER</strong> — универсальный загрузчик для CS:GO, объединяющий несколько популярных читов. Всё, что нужно — скачать лоудер, ввести ключ и нажать LOAD.</div></div>
+            <div class="info-row"><div class="info-icon">⚡</div><div><strong>Преимущества:</strong> автоматическая установка, регулярные обновления, красивый неоновый интерфейс, множество ключей активации.</div></div>
+            <div class="info-row"><div class="info-icon">🛡️</div><div><strong>ВАЖНО:</strong> Запускай лоудер от имени администратора. Отключи антивирус или добавь папку в исключения. Используй только для обучения и тестирования.</div></div>
+        </div>
     </div>
 
-    <!-- Вкладка: КОДЫ -->
     <div id="tab-codes" class="glass-card" style="display: none;">
         <h2 style="margin-bottom: 20px; text-align: center;">🔑 ДОСТУПНЫЕ КЛЮЧИ АКТИВАЦИИ</h2>
         <div class="codes-grid">
@@ -697,296 +657,73 @@
 
 <script>
     // Функция уведомления
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.className = 'toast-notification';
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
-    }
+    function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
 
-    // Копирование в буфер обмена
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast(`✅ Ключ "${text}" скопирован!`);
-        });
-    }
+    // Копирование кодов
+    document.querySelectorAll('.code-item').forEach(el => { el.addEventListener('click', () => { navigator.clipboard.writeText(el.getAttribute('data-code')); showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`); }); });
 
-    // Настройка кликов по кодам
-    document.querySelectorAll('.code-item').forEach(el => {
-        el.addEventListener('click', () => {
-            const code = el.getAttribute('data-code');
-            copyToClipboard(code);
-        });
-    });
-
-    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ (через localStorage + имитация API)
-    let downloadCount = localStorage.getItem('ambix_downloads');
-    if (!downloadCount) {
-        downloadCount = 3137;
-        localStorage.setItem('ambix_downloads', downloadCount);
-    } else {
-        downloadCount = parseInt(downloadCount);
-    }
-    
+    // ========== РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ - СБРОШЕН ДО 0 ==========
+    let downloadCount = 0;
     const downloadCountEl = document.getElementById('downloadCount');
-    downloadCountEl.textContent = downloadCount.toLocaleString();
-
-    // Кнопка скачивания
-    const downloadBtn = document.getElementById('downloadBtn');
+    downloadCountEl.textContent = "0";
     
-    downloadBtn.addEventListener('click', function(e) {
-        // Увеличиваем счетчик
-        downloadCount++;
-        downloadCountEl.textContent = downloadCount.toLocaleString();
-        localStorage.setItem('ambix_downloads', downloadCount);
+    // Сбрасываем счетчик в API до 0
+    fetch('https://api.countapi.xyz/set/ambixloader/downloads?value=0')
+        .catch(() => {});
+    
+    // Обработчик кнопки скачивания
+    document.getElementById('downloadBtn').addEventListener('click', function(e) {
+        // Увеличиваем счетчик через API
+        fetch('https://api.countapi.xyz/hit/ambixloader/downloads')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.value) {
+                    downloadCount = data.value;
+                    downloadCountEl.textContent = downloadCount.toLocaleString();
+                } else {
+                    downloadCount++;
+                    downloadCountEl.textContent = downloadCount.toLocaleString();
+                }
+            })
+            .catch(() => {
+                downloadCount++;
+                downloadCountEl.textContent = downloadCount.toLocaleString();
+                localStorage.setItem('ambix_downloads_fallback', downloadCount);
+            });
         
-        // Отправляем статистику на сервер (опционально)
-        fetch('https://api.countapi.xyz/hit/ambixloader/downloads', {
-            method: 'GET',
-            mode: 'no-cors'
-        }).catch(() => {});
-        
-        // Анимация
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1.05)';
-        }, 150);
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 300);
-        
-        // Показываем уведомление
         showToast('⬇️ Скачивание началось!');
     });
 
-    // Настройки (дефолтные значения)
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsPanel = document.getElementById('settingsPanel');
-    const animSpeed = document.getElementById('animSpeed');
-    const glowIntensitySlider = document.getElementById('glowIntensity');
-    const colorScheme = document.getElementById('colorScheme');
-
-    // Загрузка сохраненных настроек
-    const savedSpeed = localStorage.getItem('ambix_anim_speed');
-    const savedGlow = localStorage.getItem('ambix_glow_intensity');
-    const savedColor = localStorage.getItem('ambix_color_scheme');
+    // Настройки
+    const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel'), animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
+    settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
+    document.addEventListener('click', (e) => { if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) settingsPanel.classList.remove('active'); });
     
-    if (savedSpeed) animSpeed.value = savedSpeed;
-    if (savedGlow) glowIntensitySlider.value = savedGlow;
-    if (savedColor) colorScheme.value = savedColor;
-
-    // Применение настроек при загрузке
-    function applyAnimSpeed(speed) {
-        document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => {
-            const currentAnim = getComputedStyle(el).animationName;
-            if (currentAnim === 'float') {
-                el.style.animationDuration = (15 * (2 / speed)) + 's';
-            } else if (currentAnim === 'particleFloat') {
-                el.style.animationDuration = (6 * (2 / speed)) + 's';
-            } else if (currentAnim === 'twinkle') {
-                el.style.animationDuration = (4 * (2 / speed)) + 's';
-            }
-        });
-        document.querySelectorAll('.cheat-icon').forEach(el => {
-            el.style.animationDuration = (2 * (2 / speed)) + 's';
-        });
-        document.querySelectorAll('.glass-card').forEach(el => {
-            el.style.transitionDuration = (0.3 * (1 / speed)) + 's';
-        });
+    function setAnimSpeed(s) { document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => { const a = getComputedStyle(el).animationName; if (a === 'float') el.style.animationDuration = (15 * (2 / s)) + 's'; else if (a === 'particleFloat') el.style.animationDuration = (6 * (2 / s)) + 's'; else if (a === 'twinkle') el.style.animationDuration = (4 * (2 / s)) + 's'; }); document.querySelectorAll('.cheat-icon').forEach(el => el.style.animationDuration = (2 * (2 / s)) + 's'); }
+    function setGlow(i) { document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`); }
+    function setColor(c) { let p, s, r,g,b; if(c==='blue'){p='#3b82f6';s='#06b6d4';r=59;g=130;b=246;}else if(c==='purple'){p='#8b5cf6';s='#a855f7';r=139;g=92;b=246;}else if(c==='pink'){p='#ec4899';s='#f43f5e';r=236;g=72;b=153;}else if(c==='green'){p='#10b981';s='#34d399';r=16;g=185;b=129;}else{p='#6a4eff';s='#a855f7';r=106;g=78;b=255;}
+        document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
+        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
+        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.webkitBackgroundClip = 'text');
     }
+    animSpeed.oninput = (e) => { setAnimSpeed(e.target.value); localStorage.setItem('ambix_anim_speed', e.target.value); };
+    glowIntensity.oninput = (e) => { setGlow(e.target.value); localStorage.setItem('ambix_glow_intensity', e.target.value); };
+    colorScheme.onchange = (e) => { setColor(e.target.value); localStorage.setItem('ambix_color_scheme', e.target.value); };
+    
+    const savedSpeed = localStorage.getItem('ambix_anim_speed'), savedGlow = localStorage.getItem('ambix_glow_intensity'), savedColor = localStorage.getItem('ambix_color_scheme');
+    if(savedSpeed){ animSpeed.value = savedSpeed; setAnimSpeed(savedSpeed); }
+    if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
+    if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
-    function applyGlowIntensity(intensity) {
-        const boxShadowIntensity = 0.3 * intensity;
-        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => {
-            el.style.boxShadow = `0 0 ${20 * intensity}px rgba(106, 78, 255, ${boxShadowIntensity})`;
-        });
-    }
+    // Анимации
+    function createNeonBalls() { const cont = document.getElementById('neon-balls'); const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b']; for(let i=0;i<25;i++){ const b = document.createElement('div'); b.className = 'neon-ball'; const s = 100 + Math.random() * 300; b.style.width = s+'px'; b.style.height = s+'px'; b.style.left = Math.random()*100+'%'; b.style.top = Math.random()*100+'%'; b.style.background = cols[Math.floor(Math.random()*cols.length)]; b.style.opacity = 0.05+Math.random()*0.15; b.style.animationDelay = Math.random()*8+'s'; b.style.animationDuration = 12+Math.random()*12+'s'; cont.appendChild(b); } }
+    function createParticles() { const cont = document.getElementById('particles'); for(let i=0;i<120;i++){ const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random()*100+'%'; p.style.animationDelay = Math.random()*10+'s'; p.style.animationDuration = 4+Math.random()*8+'s'; p.style.width = (1.5+Math.random()*4)+'px'; p.style.height = p.style.width; cont.appendChild(p); } }
+    function createStars() { const cont = document.getElementById('stars'); for(let i=0;i<250;i++){ const s = document.createElement('div'); s.className = 'star'; s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%'; s.style.animationDelay = Math.random()*5+'s'; s.style.animationDuration = (2+Math.random()*5)+'s'; cont.appendChild(s); } }
+    createNeonBalls(); createParticles(); createStars();
 
-    function applyColorScheme(scheme) {
-        let primary, secondary, r, g, b;
-        switch(scheme) {
-            case 'blue':
-                primary = '#3b82f6';
-                secondary = '#06b6d4';
-                r = 59; g = 130; b = 246;
-                break;
-            case 'purple':
-                primary = '#8b5cf6';
-                secondary = '#a855f7';
-                r = 139; g = 92; b = 246;
-                break;
-            case 'pink':
-                primary = '#ec4899';
-                secondary = '#f43f5e';
-                r = 236; g = 72; b = 153;
-                break;
-            case 'green':
-                primary = '#10b981';
-                secondary = '#34d399';
-                r = 16; g = 185; b = 129;
-                break;
-            default:
-                primary = '#6a4eff';
-                secondary = '#a855f7';
-                r = 106; g = 78; b = 255;
-        }
-        
-        const style = document.createElement('style');
-        style.textContent = `
-            .download-btn, .tab-btn.active, .step-number {
-                background: linear-gradient(135deg, ${primary}, ${secondary}) !important;
-            }
-            .glass-card:hover, .cheat-card:hover {
-                border-color: ${primary} !important;
-                box-shadow: 0 0 40px rgba(${r}, ${g}, ${b}, 0.3) !important;
-            }
-            .stat-number, h1 {
-                background: linear-gradient(135deg, ${primary}, ${secondary});
-                -webkit-background-clip: text;
-                background-clip: text;
-            }
-            .settings-panel h3, .code-item:hover {
-                color: ${primary};
-            }
-            .code-item:hover {
-                border-color: ${primary};
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // События настроек
-    animSpeed.addEventListener('input', (e) => {
-        const speed = e.target.value;
-        applyAnimSpeed(speed);
-        localStorage.setItem('ambix_anim_speed', speed);
-    });
-
-    glowIntensitySlider.addEventListener('input', (e) => {
-        const intensity = e.target.value;
-        applyGlowIntensity(intensity);
-        localStorage.setItem('ambix_glow_intensity', intensity);
-    });
-
-    colorScheme.addEventListener('change', (e) => {
-        const scheme = e.target.value;
-        applyColorScheme(scheme);
-        localStorage.setItem('ambix_color_scheme', scheme);
-    });
-
-    // Применяем настройки при загрузке
-    applyAnimSpeed(animSpeed.value);
-    applyGlowIntensity(glowIntensitySlider.value);
-    applyColorScheme(colorScheme.value);
-
-    // Открытие/закрытие панели настроек
-    settingsBtn.addEventListener('click', () => {
-        settingsPanel.classList.toggle('active');
-    });
-
-    // Закрыть панель при клике вне
-    document.addEventListener('click', (e) => {
-        if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) {
-            settingsPanel.classList.remove('active');
-        }
-    });
-
-    // Создание неоновых шаров
-    function createNeonBalls() {
-        const container = document.getElementById('neon-balls');
-        const colors = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
-        
-        for (let i = 0; i < 25; i++) {
-            const ball = document.createElement('div');
-            ball.className = 'neon-ball';
-            const size = 100 + Math.random() * 300;
-            ball.style.width = size + 'px';
-            ball.style.height = size + 'px';
-            ball.style.left = Math.random() * 100 + '%';
-            ball.style.top = Math.random() * 100 + '%';
-            ball.style.background = colors[Math.floor(Math.random() * colors.length)];
-            ball.style.opacity = 0.05 + Math.random() * 0.15;
-            ball.style.animationDelay = Math.random() * 8 + 's';
-            ball.style.animationDuration = 12 + Math.random() * 12 + 's';
-            container.appendChild(ball);
-        }
-    }
-
-    // Создание частиц
-    function createParticles() {
-        const container = document.getElementById('particles');
-        for (let i = 0; i < 120; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particle.style.animationDuration = 4 + Math.random() * 8 + 's';
-            particle.style.width = (1.5 + Math.random() * 4) + 'px';
-            particle.style.height = particle.style.width;
-            container.appendChild(particle);
-        }
-    }
-
-    // Создание звезд
-    function createStars() {
-        const container = document.getElementById('stars');
-        for (let i = 0; i < 250; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 5 + 's';
-            star.style.animationDuration = (2 + Math.random() * 5) + 's';
-            container.appendChild(star);
-        }
-    }
-
-    // Переключение табов
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabs = {
-        cheats: document.getElementById('tab-cheats'),
-        install: document.getElementById('tab-install'),
-        info: document.getElementById('tab-info'),
-        codes: document.getElementById('tab-codes')
-    };
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tabId = btn.getAttribute('data-tab');
-            
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            Object.keys(tabs).forEach(key => {
-                if (tabs[key]) tabs[key].style.display = 'none';
-            });
-            
-            if (tabs[tabId]) tabs[tabId].style.display = 'block';
-            
-            setTimeout(() => {
-                if (tabs[tabId]) tabs[tabId].style.animation = 'fadeInUp 0.5s ease-out';
-            }, 10);
-        });
-    });
-
-    // Запуск анимаций
-    createNeonBalls();
-    createParticles();
-    createStars();
-
-    // Эффекты для карточек
-    document.querySelectorAll('.cheat-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-10px)';
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
-        });
-    });
-
-    console.log('AMBI LOADER Website Ready!');
+    // Табы
+    const btns = document.querySelectorAll('.tab-btn'), tabs = { cheats: document.getElementById('tab-cheats'), install: document.getElementById('tab-install'), info: document.getElementById('tab-info'), codes: document.getElementById('tab-codes') };
+    btns.forEach(btn => { btn.addEventListener('click', () => { const id = btn.getAttribute('data-tab'); btns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); Object.keys(tabs).forEach(k => { if(tabs[k]) tabs[k].style.display = 'none'; }); if(tabs[id]) tabs[id].style.display = 'block'; }); });
 </script>
-
 </body>
 </html>
