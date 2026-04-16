@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AMBI LOADER — Official Website</title>
-    
+    <title>AMBI LOADER - LOADER CHEATS</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none;
         }
 
         body {
@@ -20,6 +21,69 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
+            cursor: none;
+        }
+
+        /* Кастомная мышка */
+        .custom-cursor {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out;
+            will-change: left, top;
+        }
+
+        .cursor-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #6a4eff, #a855f7);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(106, 78, 255, 0.8);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .cursor-ring {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border: 2px solid rgba(106, 78, 255, 0.6);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+            box-shadow: 0 0 20px rgba(106, 78, 255, 0.4);
+        }
+
+        /* При наведении на кнопки */
+        a:hover ~ .custom-cursor .cursor-ring,
+        button:hover ~ .custom-cursor .cursor-ring,
+        .download-btn:hover ~ .custom-cursor .cursor-ring,
+        .tab-btn:hover ~ .custom-cursor .cursor-ring,
+        .cheat-card:hover ~ .custom-cursor .cursor-ring,
+        .code-item:hover ~ .custom-cursor .cursor-ring {
+            width: 40px;
+            height: 40px;
+            border-color: #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        }
+
+        a:hover ~ .custom-cursor .cursor-dot,
+        button:hover ~ .custom-cursor .cursor-dot,
+        .download-btn:hover ~ .custom-cursor .cursor-dot,
+        .tab-btn:hover ~ .custom-cursor .cursor-dot,
+        .cheat-card:hover ~ .custom-cursor .cursor-dot,
+        .code-item:hover ~ .custom-cursor .cursor-dot {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
         }
 
         /* Анимированный градиентный фон */
@@ -44,6 +108,7 @@
             pointer-events: none;
             z-index: 0;
             animation: float 15s infinite ease-in-out;
+            will-change: transform;
         }
 
         @keyframes float {
@@ -558,6 +623,12 @@
 <div id="particles"></div>
 <div id="stars"></div>
 
+<!-- Кастомная мышка -->
+<div class="custom-cursor" id="customCursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+</div>
+
 <div class="settings-btn" id="settingsBtn">⚙️</div>
 
 <div class="settings-panel" id="settingsPanel">
@@ -656,40 +727,70 @@
 </div>
 
 <script>
+    // Кастомная мышка
+    const cursor = document.getElementById('customCursor');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    
+    // Скрываем стандартный курсор при выходе за пределы окна
+    document.body.style.cursor = 'none';
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+    });
+
     // Функция уведомления
     function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
 
     // Копирование кодов
     document.querySelectorAll('.code-item').forEach(el => { el.addEventListener('click', () => { navigator.clipboard.writeText(el.getAttribute('data-code')); showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`); }); });
 
-    // ========== РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ - СБРОШЕН ДО 0 ==========
+    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ - СОХРАНЯЕТСЯ В API
     let downloadCount = 0;
     const downloadCountEl = document.getElementById('downloadCount');
-    downloadCountEl.textContent = "0";
     
-    // Сбрасываем счетчик в API до 0
-    fetch('https://api.countapi.xyz/set/ambixloader/downloads?value=0')
-        .catch(() => {});
+    // Получаем сохраненное значение из API
+    fetch('https://api.countapi.xyz/get/ambixloader/downloads')
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.value) {
+                downloadCount = data.value;
+                downloadCountEl.textContent = downloadCount.toLocaleString();
+            } else {
+                downloadCountEl.textContent = "0";
+            }
+        })
+        .catch(() => {
+            downloadCountEl.textContent = "0";
+        });
     
     // Обработчик кнопки скачивания
     document.getElementById('downloadBtn').addEventListener('click', function(e) {
-        // Увеличиваем счетчик через API
         fetch('https://api.countapi.xyz/hit/ambixloader/downloads')
             .then(res => res.json())
             .then(data => {
                 if (data && data.value) {
                     downloadCount = data.value;
                     downloadCountEl.textContent = downloadCount.toLocaleString();
-                } else {
-                    downloadCount++;
-                    downloadCountEl.textContent = downloadCount.toLocaleString();
                 }
             })
-            .catch(() => {
-                downloadCount++;
-                downloadCountEl.textContent = downloadCount.toLocaleString();
-                localStorage.setItem('ambix_downloads_fallback', downloadCount);
-            });
+            .catch(() => {});
         
         showToast('⬇️ Скачивание началось!');
     });
