@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AMBI LOADER - LOADER CHEATS</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,7 +24,7 @@
             cursor: none;
         }
 
-        /* Кастомная мышка */
+        /* Кастомная мышка - неоновый курсор как в Windows */
         .custom-cursor {
             position: fixed;
             width: 32px;
@@ -32,58 +32,77 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.08s ease-out;
             will-change: left, top;
+            filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8));
         }
 
-        .cursor-dot {
+        /* Основная стрелка курсора */
+        .cursor-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #6a4eff;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            top: 2px;
+            left: 2px;
+            filter: drop-shadow(0 0 4px #6a4eff);
+        }
+
+        /* Хвостик стрелки */
+        .cursor-arrow::after {
+            content: '';
             position: absolute;
             width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #6a4eff, #a855f7);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px rgba(106, 78, 255, 0.8);
-            transition: width 0.2s, height 0.2s;
+            height: 2px;
+            background: #6a4eff;
+            bottom: -10px;
+            left: -4px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 4px #6a4eff;
         }
 
-        .cursor-ring {
+        /* Свечение вокруг курсора */
+        .cursor-glow {
             position: absolute;
-            width: 28px;
-            height: 28px;
-            border: 2px solid rgba(106, 78, 255, 0.6);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.15s ease-out;
-            box-shadow: 0 0 20px rgba(106, 78, 255, 0.4);
-        }
-
-        /* При наведении на кнопки */
-        a:hover ~ .custom-cursor .cursor-ring,
-        button:hover ~ .custom-cursor .cursor-ring,
-        .download-btn:hover ~ .custom-cursor .cursor-ring,
-        .tab-btn:hover ~ .custom-cursor .cursor-ring,
-        .cheat-card:hover ~ .custom-cursor .cursor-ring,
-        .code-item:hover ~ .custom-cursor .cursor-ring {
             width: 40px;
             height: 40px;
-            border-color: #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(106, 78, 255, 0.4), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: glowPulse 2s infinite;
         }
 
-        a:hover ~ .custom-cursor .cursor-dot,
-        button:hover ~ .custom-cursor .cursor-dot,
-        .download-btn:hover ~ .custom-cursor .cursor-dot,
-        .tab-btn:hover ~ .custom-cursor .cursor-dot,
-        .cheat-card:hover ~ .custom-cursor .cursor-dot,
-        .code-item:hover ~ .custom-cursor .cursor-dot {
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* При наведении на интерактивные элементы */
+        a:hover ~ .custom-cursor .cursor-arrow,
+        button:hover ~ .custom-cursor .cursor-arrow,
+        .download-btn:hover ~ .custom-cursor .cursor-arrow,
+        .tab-btn:hover ~ .custom-cursor .cursor-arrow,
+        .cheat-card:hover ~ .custom-cursor .cursor-arrow,
+        .code-item:hover ~ .custom-cursor .cursor-arrow,
+        .settings-btn:hover ~ .custom-cursor .cursor-arrow,
+        .step:hover ~ .custom-cursor .cursor-arrow,
+        .info-row:hover ~ .custom-cursor .cursor-arrow {
+            border-left-color: #a855f7;
+        }
+
+        a:hover ~ .custom-cursor .cursor-glow,
+        button:hover ~ .custom-cursor .cursor-glow,
+        .download-btn:hover ~ .custom-cursor .cursor-glow,
+        .tab-btn:hover ~ .custom-cursor .cursor-glow,
+        .cheat-card:hover ~ .custom-cursor .cursor-glow,
+        .code-item:hover ~ .custom-cursor .cursor-glow,
+        .settings-btn:hover ~ .custom-cursor .cursor-glow,
+        .step:hover ~ .custom-cursor .cursor-glow,
+        .info-row:hover ~ .custom-cursor .cursor-glow {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 70%);
         }
 
         /* Анимированный градиентный фон */
@@ -609,6 +628,9 @@
             .tabs { gap: 10px; }
             .tab-btn { padding: 8px 20px; font-size: 0.9rem; }
             .info-row { flex-direction: column; text-align: center; }
+            .custom-cursor { display: none; }
+            body { cursor: auto; }
+            * { cursor: auto; }
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -623,10 +645,10 @@
 <div id="particles"></div>
 <div id="stars"></div>
 
-<!-- Кастомная мышка -->
+<!-- Кастомная мышка - неоновый курсор как в Windows -->
 <div class="custom-cursor" id="customCursor">
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+    <div class="cursor-glow"></div>
+    <div class="cursor-arrow"></div>
 </div>
 
 <div class="settings-btn" id="settingsBtn">⚙️</div>
@@ -727,7 +749,7 @@
 </div>
 
 <script>
-    // Кастомная мышка
+    // Кастомная мышка - неоновый курсор
     const cursor = document.getElementById('customCursor');
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
@@ -738,16 +760,20 @@
     });
     
     function animateCursor() {
-        cursorX += (mouseX - cursorX) * 0.2;
-        cursorY += (mouseY - cursorY) * 0.2;
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
         cursor.style.left = cursorX + 'px';
         cursor.style.top = cursorY + 'px';
         requestAnimationFrame(animateCursor);
     }
     animateCursor();
     
-    // Скрываем стандартный курсор при выходе за пределы окна
+    // Скрываем стандартный курсор
     document.body.style.cursor = 'none';
+    document.querySelectorAll('a, button, .tab-btn, .cheat-card, .code-item, .settings-btn, .step, .info-row').forEach(el => {
+        el.style.cursor = 'none';
+    });
+    
     document.addEventListener('mouseleave', () => {
         cursor.style.opacity = '0';
     });
@@ -761,11 +787,10 @@
     // Копирование кодов
     document.querySelectorAll('.code-item').forEach(el => { el.addEventListener('click', () => { navigator.clipboard.writeText(el.getAttribute('data-code')); showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`); }); });
 
-    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ - СОХРАНЯЕТСЯ В API
+    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ
     let downloadCount = 0;
     const downloadCountEl = document.getElementById('downloadCount');
     
-    // Получаем сохраненное значение из API
     fetch('https://api.countapi.xyz/get/ambixloader/downloads')
         .then(res => res.json())
         .then(data => {
@@ -780,7 +805,6 @@
             downloadCountEl.textContent = "0";
         });
     
-    // Обработчик кнопки скачивания
     document.getElementById('downloadBtn').addEventListener('click', function(e) {
         fetch('https://api.countapi.xyz/hit/ambixloader/downloads')
             .then(res => res.json())
@@ -802,10 +826,11 @@
     
     function setAnimSpeed(s) { document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => { const a = getComputedStyle(el).animationName; if (a === 'float') el.style.animationDuration = (15 * (2 / s)) + 's'; else if (a === 'particleFloat') el.style.animationDuration = (6 * (2 / s)) + 's'; else if (a === 'twinkle') el.style.animationDuration = (4 * (2 / s)) + 's'; }); document.querySelectorAll('.cheat-icon').forEach(el => el.style.animationDuration = (2 * (2 / s)) + 's'); }
     function setGlow(i) { document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`); }
-    function setColor(c) { let p, s, r,g,b; if(c==='blue'){p='#3b82f6';s='#06b6d4';r=59;g=130;b=246;}else if(c==='purple'){p='#8b5cf6';s='#a855f7';r=139;g=92;b=246;}else if(c==='pink'){p='#ec4899';s='#f43f5e';r=236;g=72;b=153;}else if(c==='green'){p='#10b981';s='#34d399';r=16;g=185;b=129;}else{p='#6a4eff';s='#a855f7';r=106;g=78;b=255;}
+    function setColor(c) { let p, s; if(c==='blue'){p='#3b82f6';s='#06b6d4';}else if(c==='purple'){p='#8b5cf6';s='#a855f7';}else if(c==='pink'){p='#ec4899';s='#f43f5e';}else if(c==='green'){p='#10b981';s='#34d399';}else{p='#6a4eff';s='#a855f7';}
         document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
         document.querySelectorAll('.stat-number, h1').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
         document.querySelectorAll('.stat-number, h1').forEach(el => el.style.webkitBackgroundClip = 'text');
+        document.querySelectorAll('.cursor-arrow').forEach(el => el.style.borderLeftColor = p);
     }
     animSpeed.oninput = (e) => { setAnimSpeed(e.target.value); localStorage.setItem('ambix_anim_speed', e.target.value); };
     glowIntensity.oninput = (e) => { setGlow(e.target.value); localStorage.setItem('ambix_glow_intensity', e.target.value); };
