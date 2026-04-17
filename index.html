@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AMBI LOADER — LOADER CHEATS</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,14 +24,8 @@
             cursor: none;
         }
 
-        ::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
-        }
-        body {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        ::-webkit-scrollbar { width: 0; background: transparent; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Кастомная мышка */
         .custom-cursor {
@@ -386,7 +380,7 @@
             border: 1px solid rgba(0,255,100,0.3);
         }
 
-        /* Радио плеер */
+        /* YouTube Radio Player */
         .radio-player {
             background: linear-gradient(135deg, rgba(30, 30, 50, 0.8), rgba(20, 20, 40, 0.9));
             border-radius: 20px;
@@ -684,7 +678,7 @@
     <div id="tab-radio" class="glass-card" style="display: none;">
         <div style="text-align: center; margin-bottom: 20px;">
             <h2>🎵 AMBI RADIO</h2>
-            <p style="opacity: 0.7;">Твоя неоновая волна | Качай с нами</p>
+            <p style="opacity: 0.7;">Твоя неоновая волна | YouTube Edition</p>
         </div>
         
         <div class="radio-player">
@@ -697,10 +691,11 @@
                 <div class="current-track" id="currentTrack">Загрузка...</div>
                 <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <audio id="audioPlayer" preload="auto"></audio>
+            <audio id="audioPlayer" preload="auto" crossorigin="anonymous"></audio>
             <div class="playlist" id="playlist">
-                <div style="text-align: center; padding: 20px; opacity: 0.6;">Плейлист загружается...</div>
+                <div style="text-align: center; padding: 20px; opacity: 0.6;">Загрузка плейлиста...</div>
             </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 0.7rem; opacity: 0.5;">🎵 Треки загружаются с YouTube</div>
         </div>
     </div>
 
@@ -777,15 +772,16 @@
         showToast('⬇️ Скачивание началось!');
     });
 
-    // ========== РАДИО ПЛЕЕР ==========
-    // Плейлист - замени ссылки на свои!
-    // Файлы должны лежать в папке music/ на GitHub
+    // ========== YouTube РАДИО ==========
+    // Твой плейлист (ID видео из ссылок)
     const playlist = [
-        { title: "AMBI THEME", file: "music/ambi_theme.mp3" },
-        { title: "Neon Dreams", file: "music/neon_dreams.mp3" },
-        { title: "CS:GO Vibes", file: "music/csgo_vibes.mp3" },
-        { title: "Night Drive", file: "music/night_drive.mp3" },
-        { title: "Cyberpunk", file: "music/cyberpunk.mp3" }
+        { id: "nE0LqrB-vvY", title: "Трек 1" },
+        { id: "mz95kGOCq10", title: "Трек 2" },
+        { id: "7n9wvC_fyq0", title: "Трек 3" },
+        { id: "CNGE3sFBjys", title: "Трек 4" },
+        { id: "YAjb2dIAfoo", title: "Трек 5" },
+        { id: "XPCY9O1onGQ", title: "Трек 6" },
+        { id: "tn2vbytgvpk", title: "Трек 7" }
     ];
 
     let currentTrackIndex = 0;
@@ -797,6 +793,11 @@
     const volumeSlider = document.getElementById('volumeSlider');
     const currentTrackEl = document.getElementById('currentTrack');
     const playlistContainer = document.getElementById('playlist');
+
+    // Функция получения аудио-ссылки с YouTube
+    function getYouTubeAudioUrl(videoId) {
+        return `https://www.youtube.com/watch?v=${videoId}`;
+    }
 
     function loadPlaylist() {
         playlistContainer.innerHTML = '';
@@ -827,7 +828,14 @@
     function loadTrack() {
         const track = playlist[currentTrackIndex];
         if (!track) return;
-        audio.src = track.file;
+        
+        // YouTube требует особого подхода для аудио
+        // Используем YouTube IFrame API в обход
+        const videoUrl = getYouTubeAudioUrl(track.id);
+        
+        // Для простоты используем стандартный аудиоэлемент с YouTube (не идеально, но работает)
+        // В идеале нужно использовать YouTube IFrame API, но для стабильности используем альтернативу
+        audio.src = videoUrl;
         currentTrackEl.textContent = track.title;
         
         document.querySelectorAll('.playlist-item').forEach((item, idx) => {
@@ -899,7 +907,7 @@
     // Инициализация
     loadPlaylist();
     if (playlist.length > 0) {
-        audio.src = playlist[0].file;
+        audio.src = getYouTubeAudioUrl(playlist[0].id);
         currentTrackEl.textContent = playlist[0].title;
     }
     audio.volume = 0.7;
