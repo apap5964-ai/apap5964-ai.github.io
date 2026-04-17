@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AMBI LOADER — LOADER CHEATS</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,10 +24,16 @@
             cursor: none;
         }
 
-        ::-webkit-scrollbar { width: 0; background: transparent; }
-        body { -ms-overflow-style: none; scrollbar-width: none; }
+        ::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-        /* Кастомная мышка - оригинальная */
+        /* Кастомная мышка */
         .custom-cursor {
             position: fixed;
             width: 32px;
@@ -72,7 +78,8 @@
         .code-item:hover ~ .custom-cursor .cursor-arrow,
         .settings-btn:hover ~ .custom-cursor .cursor-arrow,
         .step:hover ~ .custom-cursor .cursor-arrow,
-        .info-row:hover ~ .custom-cursor .cursor-arrow {
+        .info-row:hover ~ .custom-cursor .cursor-arrow,
+        .playlist-item:hover ~ .custom-cursor .cursor-arrow {
             border-left-color: #a855f7;
         }
 
@@ -239,7 +246,7 @@
 
         /* Заголовок */
         h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 900;
             background: linear-gradient(135deg, #6a4eff, #a855f7, #ec4899);
             -webkit-background-clip: text;
@@ -257,30 +264,25 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-        .subtitle { font-size: 1.2rem; color: rgba(255, 255, 255, 0.7); margin-top: 15px; }
+        .subtitle { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 10px; }
 
         /* Кнопка скачивания */
         .download-btn {
             display: inline-block;
             background: linear-gradient(135deg, #6a4eff, #a855f7);
-            padding: 18px 50px;
-            font-size: 1.4rem;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             font-weight: 700;
             border-radius: 60px;
             text-decoration: none;
             color: white;
-            margin: 20px 0;
+            margin: 15px 0;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(106, 78, 255, 0.4);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(106, 78, 255, 0.4); }
-            50% { box-shadow: 0 0 35px rgba(106, 78, 255, 0.7); }
         }
         .download-btn::before {
             content: '';
@@ -309,7 +311,7 @@
         .tab-btn {
             background: rgba(20, 20, 35, 0.8);
             border: 1px solid rgba(106, 78, 255, 0.3);
-            padding: 12px 35px;
+            padding: 10px 30px;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.3s;
@@ -329,7 +331,7 @@
             color: white;
         }
 
-        /* Карточки читов с анимацией как раньше */
+        /* Карточки читов */
         .cheats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -339,13 +341,13 @@
         .cheat-card {
             background: rgba(20, 20, 40, 0.7);
             border-radius: 24px;
-            padding: 30px 25px;
+            padding: 25px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(106, 78, 255, 0.2);
+            transition: all 0.4s;
+            border: 1px solid rgba(106, 78, 255, 0.3);
             cursor: pointer;
             backdrop-filter: blur(5px);
-            animation: fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+            animation: fadeInScale 0.6s backwards;
         }
         .cheat-card:nth-child(1) { animation-delay: 0.1s; }
         .cheat-card:nth-child(2) { animation-delay: 0.2s; }
@@ -357,19 +359,15 @@
         .cheat-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: #6a4eff;
-            box-shadow: 0 15px 35px rgba(106, 78, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(106, 78, 255, 0.3);
         }
-        .cheat-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            animation: iconBounce 2s infinite;
-        }
+        .cheat-icon { font-size: 3rem; margin-bottom: 15px; animation: iconBounce 2s infinite; }
         @keyframes iconBounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
         }
         .cheat-name {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 10px;
             background: linear-gradient(135deg, #fff, #a855f7);
@@ -377,28 +375,120 @@
             background-clip: text;
             color: transparent;
         }
-        .cheat-desc { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+        .cheat-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 15px; }
         .cheat-status {
             display: inline-block;
             padding: 5px 18px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             background: rgba(0,255,100,0.15);
             color: #00ff88;
             border: 1px solid rgba(0,255,100,0.3);
         }
 
+        /* Радио плеер */
+        .radio-player {
+            background: linear-gradient(135deg, rgba(30, 30, 50, 0.8), rgba(20, 20, 40, 0.9));
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(106, 78, 255, 0.3);
+        }
+        .player-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .radio-btn {
+            background: rgba(106, 78, 255, 0.2);
+            border: 1px solid rgba(106, 78, 255, 0.4);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        .radio-btn:hover {
+            background: rgba(106, 78, 255, 0.4);
+            transform: scale(1.05);
+            border-color: #6a4eff;
+        }
+        .current-track {
+            flex: 1;
+            font-weight: 600;
+            color: #a855f7;
+        }
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #6a4eff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px #6a4eff;
+        }
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(20, 20, 35, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .playlist-item:hover {
+            background: rgba(50, 50, 80, 0.6);
+            border-color: #6a4eff;
+            transform: translateX(5px);
+        }
+        .playlist-item.active {
+            background: rgba(106, 78, 255, 0.2);
+            border-color: #6a4eff;
+        }
+        .playlist-num { color: #6a4eff; font-weight: 700; width: 30px; }
+        .playlist-title { flex: 1; }
+        .playlist-duration { font-size: 0.8rem; opacity: 0.6; }
+
         /* Инструкция */
         .steps {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         .step {
             display: flex;
             align-items: center;
             gap: 20px;
-            padding: 15px 20px;
+            padding: 12px 20px;
             background: rgba(30, 30, 50, 0.5);
             border-radius: 20px;
             transition: all 0.3s;
@@ -410,30 +500,30 @@
             transform: translateX(10px);
         }
         .step-number {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, #6a4eff, #a855f7);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             box-shadow: 0 0 15px rgba(106, 78, 255, 0.5);
         }
 
         /* Коды */
         .codes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
             margin-top: 20px;
         }
         .code-item {
             background: rgba(106, 78, 255, 0.1);
             border: 1px solid rgba(106, 78, 255, 0.3);
             border-radius: 15px;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             font-weight: 700;
             transition: all 0.3s;
@@ -449,34 +539,34 @@
         .stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 20px;
+            gap: 30px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
         .stat-item {
             text-align: center;
-            padding: 10px 20px;
+            padding: 8px 20px;
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
             backdrop-filter: blur(5px);
         }
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, #6a4eff, #a855f7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .stat-label { font-size: 0.8rem; opacity: 0.7; }
+        .stat-label { font-size: 0.75rem; opacity: 0.7; }
 
         /* Инфо */
-        .info-content { display: flex; flex-direction: column; gap: 20px; }
+        .info-content { display: flex; flex-direction: column; gap: 15px; }
         .info-row {
             display: flex;
             align-items: center;
             gap: 20px;
-            padding: 15px;
+            padding: 12px;
             background: rgba(30, 30, 50, 0.3);
             border-radius: 20px;
             transition: all 0.3s;
@@ -485,7 +575,7 @@
             background: rgba(50, 50, 80, 0.5);
             transform: translateX(10px);
         }
-        .info-icon { font-size: 2.5rem; }
+        .info-icon { font-size: 2rem; }
 
         /* Уведомление */
         .toast {
@@ -495,10 +585,11 @@
             transform: translateX(-50%);
             background: linear-gradient(135deg, #6a4eff, #a855f7);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 50px;
             z-index: 1000;
             font-weight: bold;
+            font-size: 0.9rem;
             box-shadow: 0 0 20px rgba(106,78,255,0.5);
             animation: toastFade 2s ease-out forwards;
         }
@@ -510,17 +601,18 @@
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .glass-card { padding: 25px; margin: 15px; }
-            .download-btn { padding: 12px 30px; font-size: 1.1rem; }
+            h1 { font-size: 1.8rem; }
+            .glass-card { padding: 20px; margin: 15px; }
+            .download-btn { padding: 10px 25px; font-size: 1rem; }
             .step { flex-direction: column; text-align: center; }
             .step-number { margin-bottom: 10px; }
-            .tabs { gap: 10px; }
-            .tab-btn { padding: 8px 20px; font-size: 0.9rem; }
+            .tabs { gap: 8px; }
+            .tab-btn { padding: 6px 15px; font-size: 0.8rem; }
             .info-row { flex-direction: column; text-align: center; }
             .custom-cursor { display: none; }
             body { cursor: auto; }
             * { cursor: auto; }
+            .player-header { flex-direction: column; }
         }
     </style>
 </head>
@@ -571,13 +663,14 @@
 
     <div class="tabs">
         <div class="tab-btn active" data-tab="cheats">🎮 ЧИТЫ</div>
+        <div class="tab-btn" data-tab="radio">🎵 РАДИО</div>
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
         <div class="tab-btn" data-tab="info">ℹ️ ИНФО</div>
         <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
     </div>
 
     <div id="tab-cheats" class="glass-card" style="display: block;">
-        <div style="text-align: center; margin-bottom: 25px;">
+        <div style="text-align: center; margin-bottom: 20px;">
             <h2>🔥 ДОСТУПНЫЕ ЧИТЫ 🔥</h2>
             <p style="opacity: 0.7;">Нажми LOAD в лоудере — всё скачается автоматически</p>
         </div>
@@ -588,8 +681,31 @@
         </div>
     </div>
 
+    <div id="tab-radio" class="glass-card" style="display: none;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2>🎵 AMBI RADIO</h2>
+            <p style="opacity: 0.7;">Твоя неоновая волна | Качай с нами</p>
+        </div>
+        
+        <div class="radio-player">
+            <div class="player-header">
+                <div class="player-controls">
+                    <div class="radio-btn" id="playPauseBtn">⏸</div>
+                    <div class="radio-btn" id="prevBtn">⏮</div>
+                    <div class="radio-btn" id="nextBtn">⏭</div>
+                </div>
+                <div class="current-track" id="currentTrack">Загрузка...</div>
+                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+            <audio id="audioPlayer" preload="auto"></audio>
+            <div class="playlist" id="playlist">
+                <div style="text-align: center; padding: 20px; opacity: 0.6;">Плейлист загружается...</div>
+            </div>
+        </div>
+    </div>
+
     <div id="tab-install" class="glass-card" style="display: none;">
-        <h2 style="margin-bottom: 25px;">📥 ПОШАГОВАЯ ИНСТРУКЦИЯ</h2>
+        <h2 style="margin-bottom: 20px;">📥 ПОШАГОВАЯ ИНСТРУКЦИЯ</h2>
         <div class="steps">
             <div class="step"><div class="step-number">1</div><div class="step-text"><strong>Скачай AMBI LOADER</strong><br>Нажми кнопку "Скачать" на этом сайте</div></div>
             <div class="step"><div class="step-number">2</div><div class="step-text"><strong>Запусти AMBI LOADER</strong><br>При первом запуске может попросить права администратора</div></div>
@@ -600,7 +716,7 @@
     </div>
 
     <div id="tab-info" class="glass-card" style="display: none;">
-        <h2 style="margin-bottom: 20px; text-align: center;">ℹ️ О ПРОЕКТЕ</h2>
+        <h2 style="margin-bottom: 15px; text-align: center;">ℹ️ О ПРОЕКТЕ</h2>
         <div class="info-content">
             <div class="info-row"><div class="info-icon">🚀</div><div><strong>AMBI LOADER</strong> — универсальный загрузчик для CS:GO, объединяющий несколько популярных читов. Всё, что нужно — скачать лоудер, ввести ключ и нажать LOAD.</div></div>
             <div class="info-row"><div class="info-icon">⚡</div><div><strong>Преимущества:</strong> автоматическая установка, регулярные обновления, красивый неоновый интерфейс, множество ключей активации.</div></div>
@@ -609,7 +725,7 @@
     </div>
 
     <div id="tab-codes" class="glass-card" style="display: none;">
-        <h2 style="margin-bottom: 20px; text-align: center;">🔑 ДОСТУПНЫЕ КЛЮЧИ АКТИВАЦИИ</h2>
+        <h2 style="margin-bottom: 15px; text-align: center;">🔑 ДОСТУПНЫЕ КЛЮЧИ АКТИВАЦИИ</h2>
         <div class="codes-grid">
             <div class="code-item" data-code="AmbiLEGENDA">🏆 AmbiLEGENDA</div>
             <div class="code-item" data-code="AmbiLOX">🦊 AmbiLOX</div>
@@ -619,21 +735,15 @@
             <div class="code-item" data-code="RONALDO">⚽ RONALDO</div>
             <div class="code-item" data-code="SU">🇷🇺 SU</div>
         </div>
-        <p style="text-align: center; margin-top: 20px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
+        <p style="text-align: center; margin-top: 15px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
 </div>
 
 <script>
-    // Кастомная мышка - оригинальная
+    // Кастомная мышка
     const cursor = document.getElementById('customCursor');
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    
+    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+    document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
     function animateCursor() {
         cursorX += (mouseX - cursorX) * 0.15;
         cursorY += (mouseY - cursorY) * 0.15;
@@ -642,18 +752,10 @@
         requestAnimationFrame(animateCursor);
     }
     animateCursor();
-    
     document.body.style.cursor = 'none';
-    document.querySelectorAll('a, button, .tab-btn, .cheat-card, .code-item, .settings-btn, .step, .info-row').forEach(el => {
-        el.style.cursor = 'none';
-    });
-    
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-    });
+    document.querySelectorAll('a, button, .tab-btn, .cheat-card, .code-item, .settings-btn, .step, .info-row, .radio-btn, .playlist-item').forEach(el => el.style.cursor = 'none');
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
 
     function showToast(msg) {
         const t = document.createElement('div');
@@ -675,19 +777,139 @@
         showToast('⬇️ Скачивание началось!');
     });
 
-    // Настройки
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsPanel = document.getElementById('settingsPanel');
-    const animSpeed = document.getElementById('animSpeed');
-    const glowIntensity = document.getElementById('glowIntensity');
-    const colorScheme = document.getElementById('colorScheme');
+    // ========== РАДИО ПЛЕЕР ==========
+    // Плейлист - замени ссылки на свои!
+    // Файлы должны лежать в папке music/ на GitHub
+    const playlist = [
+        { title: "AMBI THEME", file: "music/ambi_theme.mp3" },
+        { title: "Neon Dreams", file: "music/neon_dreams.mp3" },
+        { title: "CS:GO Vibes", file: "music/csgo_vibes.mp3" },
+        { title: "Night Drive", file: "music/night_drive.mp3" },
+        { title: "Cyberpunk", file: "music/cyberpunk.mp3" }
+    ];
 
-    settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
-    document.addEventListener('click', (e) => {
-        if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) {
-            settingsPanel.classList.remove('active');
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    const audio = document.getElementById('audioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const currentTrackEl = document.getElementById('currentTrack');
+    const playlistContainer = document.getElementById('playlist');
+
+    function loadPlaylist() {
+        playlistContainer.innerHTML = '';
+        playlist.forEach((track, index) => {
+            const item = document.createElement('div');
+            item.className = 'playlist-item';
+            if (index === currentTrackIndex) item.classList.add('active');
+            item.innerHTML = `
+                <span class="playlist-num">${(index + 1).toString().padStart(2, '0')}</span>
+                <span class="playlist-title">${track.title}</span>
+                <span class="playlist-duration">🎵</span>
+            `;
+            item.addEventListener('click', () => {
+                currentTrackIndex = index;
+                loadTrack();
+                if (isPlaying) {
+                    audio.play().catch(e => console.log('Play error:', e));
+                } else {
+                    audio.play().catch(e => console.log('Play error:', e));
+                    isPlaying = true;
+                    playPauseBtn.textContent = '⏸';
+                }
+            });
+            playlistContainer.appendChild(item);
+        });
+    }
+
+    function loadTrack() {
+        const track = playlist[currentTrackIndex];
+        if (!track) return;
+        audio.src = track.file;
+        currentTrackEl.textContent = track.title;
+        
+        document.querySelectorAll('.playlist-item').forEach((item, idx) => {
+            if (idx === currentTrackIndex) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        
+        audio.load();
+        if (isPlaying) {
+            audio.play().catch(e => console.log('Play error:', e));
+        }
+    }
+
+    function playPause() {
+        if (isPlaying) {
+            audio.pause();
+            playPauseBtn.textContent = '▶';
+            isPlaying = false;
+        } else {
+            if (!audio.src) {
+                loadTrack();
+            }
+            audio.play().catch(e => console.log('Play error:', e));
+            playPauseBtn.textContent = '⏸';
+            isPlaying = true;
+        }
+    }
+
+    function prevTrack() {
+        currentTrackIndex--;
+        if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
+        loadTrack();
+        if (isPlaying) {
+            audio.play().catch(e => console.log('Play error:', e));
+        }
+    }
+
+    function nextTrack() {
+        currentTrackIndex++;
+        if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+        loadTrack();
+        if (isPlaying) {
+            audio.play().catch(e => console.log('Play error:', e));
+        }
+    }
+
+    function setVolume() {
+        audio.volume = volumeSlider.value;
+    }
+
+    playPauseBtn.addEventListener('click', playPause);
+    prevBtn.addEventListener('click', prevTrack);
+    nextBtn.addEventListener('click', nextTrack);
+    volumeSlider.addEventListener('input', setVolume);
+    
+    audio.addEventListener('ended', () => {
+        nextTrack();
+    });
+    
+    audio.addEventListener('canplay', () => {
+        if (isPlaying) {
+            audio.play().catch(e => console.log('Play error:', e));
         }
     });
+
+    // Инициализация
+    loadPlaylist();
+    if (playlist.length > 0) {
+        audio.src = playlist[0].file;
+        currentTrackEl.textContent = playlist[0].title;
+    }
+    audio.volume = 0.7;
+    volumeSlider.value = 0.7;
+
+    // Настройки
+    const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
+    const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
+    settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
+    document.addEventListener('click', (e) => { if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) settingsPanel.classList.remove('active'); });
     
     function setAnimSpeed(s) {
         document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => {
@@ -698,50 +920,26 @@
         });
         document.querySelectorAll('.cheat-icon').forEach(el => el.style.animationDuration = (2 * (2 / s)) + 's');
     }
-    
     function setGlow(i) {
-        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => {
-            el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`;
-        });
+        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`);
     }
-    
     function setColor(c) {
         let p, s;
-        if(c === 'blue') { p = '#3b82f6'; s = '#06b6d4'; }
-        else if(c === 'purple') { p = '#8b5cf6'; s = '#a855f7'; }
-        else if(c === 'pink') { p = '#ec4899'; s = '#f43f5e'; }
-        else if(c === 'green') { p = '#10b981'; s = '#34d399'; }
-        else { p = '#6a4eff'; s = '#a855f7'; }
-        
-        document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => {
-            el.style.background = `linear-gradient(135deg, ${p}, ${s})`;
-        });
-        document.querySelectorAll('.stat-number, h1').forEach(el => {
-            el.style.background = `linear-gradient(135deg, ${p}, ${s})`;
-            el.style.webkitBackgroundClip = 'text';
-        });
-        document.querySelectorAll('.cursor-arrow').forEach(el => {
-            el.style.borderLeftColor = p;
-        });
+        if(c==='blue'){p='#3b82f6';s='#06b6d4';}
+        else if(c==='purple'){p='#8b5cf6';s='#a855f7';}
+        else if(c==='pink'){p='#ec4899';s='#f43f5e';}
+        else if(c==='green'){p='#10b981';s='#34d399';}
+        else{p='#6a4eff';s='#a855f7';}
+        document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
+        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
+        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.webkitBackgroundClip = 'text');
+        document.querySelectorAll('.cursor-arrow').forEach(el => el.style.borderLeftColor = p);
     }
+    animSpeed.oninput = (e) => { setAnimSpeed(e.target.value); localStorage.setItem('ambix_anim_speed', e.target.value); };
+    glowIntensity.oninput = (e) => { setGlow(e.target.value); localStorage.setItem('ambix_glow_intensity', e.target.value); };
+    colorScheme.onchange = (e) => { setColor(e.target.value); localStorage.setItem('ambix_color_scheme', e.target.value); };
     
-    animSpeed.oninput = (e) => {
-        setAnimSpeed(e.target.value);
-        localStorage.setItem('ambix_anim_speed', e.target.value);
-    };
-    glowIntensity.oninput = (e) => {
-        setGlow(e.target.value);
-        localStorage.setItem('ambix_glow_intensity', e.target.value);
-    };
-    colorScheme.onchange = (e) => {
-        setColor(e.target.value);
-        localStorage.setItem('ambix_color_scheme', e.target.value);
-    };
-    
-    const savedSpeed = localStorage.getItem('ambix_anim_speed');
-    const savedGlow = localStorage.getItem('ambix_glow_intensity');
-    const savedColor = localStorage.getItem('ambix_color_scheme');
-    
+    const savedSpeed = localStorage.getItem('ambix_anim_speed'), savedGlow = localStorage.getItem('ambix_glow_intensity'), savedColor = localStorage.getItem('ambix_color_scheme');
     if(savedSpeed){ animSpeed.value = savedSpeed; setAnimSpeed(savedSpeed); }
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
@@ -750,7 +948,7 @@
     function createNeonBalls() {
         const cont = document.getElementById('neon-balls');
         const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
-        for(let i=0;i<25;i++){
+        for(let i=0;i<20;i++){
             const b = document.createElement('div'); b.className = 'neon-ball';
             const s = 100 + Math.random() * 300;
             b.style.width = s+'px'; b.style.height = s+'px';
@@ -764,7 +962,7 @@
     }
     function createParticles() {
         const cont = document.getElementById('particles');
-        for(let i=0;i<120;i++){
+        for(let i=0;i<100;i++){
             const p = document.createElement('div'); p.className = 'particle';
             p.style.left = Math.random()*100+'%';
             p.style.animationDelay = Math.random()*10+'s';
@@ -776,7 +974,7 @@
     }
     function createStars() {
         const cont = document.getElementById('stars');
-        for(let i=0;i<250;i++){
+        for(let i=0;i<200;i++){
             const s = document.createElement('div'); s.className = 'star';
             s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%';
             s.style.animationDelay = Math.random()*5+'s';
@@ -788,12 +986,7 @@
 
     // Табы
     const btns = document.querySelectorAll('.tab-btn');
-    const tabs = {
-        cheats: document.getElementById('tab-cheats'),
-        install: document.getElementById('tab-install'),
-        info: document.getElementById('tab-info'),
-        codes: document.getElementById('tab-codes')
-    };
+    const tabs = { cheats: document.getElementById('tab-cheats'), radio: document.getElementById('tab-radio'), install: document.getElementById('tab-install'), info: document.getElementById('tab-info'), codes: document.getElementById('tab-codes') };
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-tab');
