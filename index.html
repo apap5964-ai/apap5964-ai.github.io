@@ -27,7 +27,6 @@
         ::-webkit-scrollbar { width: 0; background: transparent; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Кастомная мышка */
         .custom-cursor {
             position: fixed;
             width: 32px;
@@ -77,7 +76,6 @@
             border-left-color: #a855f7;
         }
 
-        /* Фон */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -91,7 +89,6 @@
             pointer-events: none;
         }
 
-        /* Неоновые шары */
         .neon-ball {
             position: fixed;
             border-radius: 50%;
@@ -106,7 +103,6 @@
             66% { transform: translate(-20px, 20px) scale(0.9); }
         }
 
-        /* Частицы */
         .particle {
             position: fixed;
             width: 3px;
@@ -125,7 +121,6 @@
             100% { transform: translateY(-20vh) scale(1); opacity: 0; }
         }
 
-        /* Звезды */
         .star {
             position: fixed;
             width: 1px;
@@ -141,7 +136,6 @@
             50% { opacity: 0.8; transform: scale(1.5); }
         }
 
-        /* Шестеренка настроек */
         .settings-btn {
             position: fixed;
             top: 20px;
@@ -166,7 +160,6 @@
             box-shadow: 0 0 20px rgba(106, 78, 255, 0.3);
         }
 
-        /* Панель настроек */
         .settings-panel {
             position: fixed;
             top: 80px;
@@ -195,7 +188,6 @@
             cursor: pointer;
         }
 
-        /* Контейнер */
         .container {
             position: relative;
             z-index: 2;
@@ -204,7 +196,6 @@
             padding: 40px 20px;
         }
 
-        /* Стеклянная карточка */
         .glass-card {
             background: rgba(10, 10, 20, 0.6);
             backdrop-filter: blur(12px);
@@ -238,7 +229,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Заголовок */
         h1 {
             font-size: 4rem;
             font-weight: 900;
@@ -260,7 +250,6 @@
         }
         .subtitle { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-top: 10px; }
 
-        /* Кнопка скачивания */
         .download-btn {
             display: inline-block;
             background: linear-gradient(135deg, #6a4eff, #a855f7);
@@ -294,7 +283,6 @@
             box-shadow: 0 0 40px rgba(106, 78, 255, 0.8);
         }
 
-        /* Табы */
         .tabs {
             display: flex;
             justify-content: center;
@@ -325,7 +313,6 @@
             color: white;
         }
 
-        /* Карточки читов */
         .cheats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -472,7 +459,6 @@
         .playlist-title { flex: 1; }
         .playlist-duration { font-size: 0.8rem; opacity: 0.6; }
 
-        /* Инструкция */
         .steps {
             display: flex;
             flex-direction: column;
@@ -506,7 +492,6 @@
             box-shadow: 0 0 15px rgba(106, 78, 255, 0.5);
         }
 
-        /* Коды */
         .codes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -529,7 +514,6 @@
             border-color: #6a4eff;
         }
 
-        /* Статистика */
         .stats {
             display: flex;
             justify-content: center;
@@ -554,7 +538,6 @@
         }
         .stat-label { font-size: 0.75rem; opacity: 0.7; }
 
-        /* Инфо */
         .info-content { display: flex; flex-direction: column; gap: 15px; }
         .info-row {
             display: flex;
@@ -571,7 +554,6 @@
         }
         .info-icon { font-size: 2rem; }
 
-        /* Уведомление */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -691,11 +673,11 @@
                 <div class="current-track" id="currentTrack">Загрузка...</div>
                 <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <audio id="audioPlayer" preload="auto" crossorigin="anonymous"></audio>
+            <div id="youtube-player"></div>
             <div class="playlist" id="playlist">
                 <div style="text-align: center; padding: 20px; opacity: 0.6;">Загрузка плейлиста...</div>
             </div>
-            <div style="text-align: center; margin-top: 15px; font-size: 0.7rem; opacity: 0.5;">🎵 Треки загружаются с YouTube</div>
+            <div style="text-align: center; margin-top: 15px; font-size: 0.7rem; opacity: 0.5;">🎵 Треки с YouTube</div>
         </div>
     </div>
 
@@ -734,6 +716,7 @@
     </div>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
     // Кастомная мышка
     const cursor = document.getElementById('customCursor');
@@ -760,7 +743,6 @@
         setTimeout(() => t.remove(), 2000);
     }
 
-    // Копирование кодов
     document.querySelectorAll('.code-item').forEach(el => {
         el.addEventListener('click', () => {
             navigator.clipboard.writeText(el.getAttribute('data-code'));
@@ -772,8 +754,7 @@
         showToast('⬇️ Скачивание началось!');
     });
 
-    // ========== YouTube РАДИО ==========
-    // Твой плейлист (ID видео из ссылок)
+    // ========== YouTube РАДИО (рабочая версия) ==========
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -785,19 +766,15 @@
     ];
 
     let currentTrackIndex = 0;
+    let player;
     let isPlaying = false;
-    const audio = document.getElementById('audioPlayer');
+    
     const playPauseBtn = document.getElementById('playPauseBtn');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const volumeSlider = document.getElementById('volumeSlider');
     const currentTrackEl = document.getElementById('currentTrack');
     const playlistContainer = document.getElementById('playlist');
-
-    // Функция получения аудио-ссылки с YouTube
-    function getYouTubeAudioUrl(videoId) {
-        return `https://www.youtube.com/watch?v=${videoId}`;
-    }
 
     function loadPlaylist() {
         playlistContainer.innerHTML = '';
@@ -812,31 +789,18 @@
             `;
             item.addEventListener('click', () => {
                 currentTrackIndex = index;
-                loadTrack();
-                if (isPlaying) {
-                    audio.play().catch(e => console.log('Play error:', e));
-                } else {
-                    audio.play().catch(e => console.log('Play error:', e));
-                    isPlaying = true;
-                    playPauseBtn.textContent = '⏸';
-                }
+                playTrack();
             });
             playlistContainer.appendChild(item);
         });
     }
 
-    function loadTrack() {
+    function playTrack() {
         const track = playlist[currentTrackIndex];
         if (!track) return;
         
-        // YouTube требует особого подхода для аудио
-        // Используем YouTube IFrame API в обход
-        const videoUrl = getYouTubeAudioUrl(track.id);
-        
-        // Для простоты используем стандартный аудиоэлемент с YouTube (не идеально, но работает)
-        // В идеале нужно использовать YouTube IFrame API, но для стабильности используем альтернативу
-        audio.src = videoUrl;
         currentTrackEl.textContent = track.title;
+        player.loadVideoById(track.id);
         
         document.querySelectorAll('.playlist-item').forEach((item, idx) => {
             if (idx === currentTrackIndex) {
@@ -846,22 +810,56 @@
             }
         });
         
-        audio.load();
         if (isPlaying) {
-            audio.play().catch(e => console.log('Play error:', e));
+            player.playVideo();
+        } else {
+            player.playVideo();
+            isPlaying = true;
+            playPauseBtn.textContent = '⏸';
+        }
+    }
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: playlist[0].id,
+            playerVars: {
+                'autoplay': 1,
+                'controls': 0,
+                'disablekb': 1,
+                'modestbranding': 1,
+                'rel': 0,
+                'showinfo': 0
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        player.setVolume(volumeSlider.value * 100);
+        currentTrackEl.textContent = playlist[0].title;
+        player.playVideo();
+        isPlaying = true;
+        playPauseBtn.textContent = '⏸';
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            nextTrack();
         }
     }
 
     function playPause() {
         if (isPlaying) {
-            audio.pause();
+            player.pauseVideo();
             playPauseBtn.textContent = '▶';
             isPlaying = false;
         } else {
-            if (!audio.src) {
-                loadTrack();
-            }
-            audio.play().catch(e => console.log('Play error:', e));
+            player.playVideo();
             playPauseBtn.textContent = '⏸';
             isPlaying = true;
         }
@@ -870,48 +868,28 @@
     function prevTrack() {
         currentTrackIndex--;
         if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
-        loadTrack();
-        if (isPlaying) {
-            audio.play().catch(e => console.log('Play error:', e));
-        }
+        playTrack();
     }
 
     function nextTrack() {
         currentTrackIndex++;
         if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
-        loadTrack();
-        if (isPlaying) {
-            audio.play().catch(e => console.log('Play error:', e));
-        }
+        playTrack();
     }
 
     function setVolume() {
-        audio.volume = volumeSlider.value;
+        if (player) {
+            player.setVolume(volumeSlider.value * 100);
+        }
     }
 
     playPauseBtn.addEventListener('click', playPause);
     prevBtn.addEventListener('click', prevTrack);
     nextBtn.addEventListener('click', nextTrack);
     volumeSlider.addEventListener('input', setVolume);
-    
-    audio.addEventListener('ended', () => {
-        nextTrack();
-    });
-    
-    audio.addEventListener('canplay', () => {
-        if (isPlaying) {
-            audio.play().catch(e => console.log('Play error:', e));
-        }
-    });
 
-    // Инициализация
     loadPlaylist();
-    if (playlist.length > 0) {
-        audio.src = getYouTubeAudioUrl(playlist[0].id);
-        currentTrackEl.textContent = playlist[0].title;
-    }
-    audio.volume = 0.7;
-    volumeSlider.value = 0.7;
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
     // Настройки
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
@@ -952,7 +930,6 @@
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
-    // Анимации
     function createNeonBalls() {
         const cont = document.getElementById('neon-balls');
         const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
@@ -992,7 +969,6 @@
     }
     createNeonBalls(); createParticles(); createStars();
 
-    // Табы
     const btns = document.querySelectorAll('.tab-btn');
     const tabs = { cheats: document.getElementById('tab-cheats'), radio: document.getElementById('tab-radio'), install: document.getElementById('tab-install'), info: document.getElementById('tab-info'), codes: document.getElementById('tab-codes') };
     btns.forEach(btn => {
