@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AMBI LOADER - LOADER CHEATS</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
+    <title>AMBI LOADER — LOADER CHEATS</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,7 +24,10 @@
             cursor: none;
         }
 
-        /* Кастомная мышка - неоновый курсор как в Windows */
+        ::-webkit-scrollbar { width: 0; background: transparent; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Кастомная мышка - оригинальная */
         .custom-cursor {
             position: fixed;
             width: 32px;
@@ -35,8 +38,6 @@
             will-change: left, top;
             filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8));
         }
-
-        /* Основная стрелка курсора */
         .cursor-arrow {
             position: absolute;
             width: 0;
@@ -48,21 +49,6 @@
             left: 2px;
             filter: drop-shadow(0 0 4px #6a4eff);
         }
-
-        /* Хвостик стрелки */
-        .cursor-arrow::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 2px;
-            background: #6a4eff;
-            bottom: -10px;
-            left: -4px;
-            transform: rotate(45deg);
-            box-shadow: 0 0 4px #6a4eff;
-        }
-
-        /* Свечение вокруг курсора */
         .cursor-glow {
             position: absolute;
             width: 40px;
@@ -74,13 +60,10 @@
             transform: translate(-50%, -50%);
             animation: glowPulse 2s infinite;
         }
-
         @keyframes glowPulse {
             0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
             50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
         }
-
-        /* При наведении на интерактивные элементы */
         a:hover ~ .custom-cursor .cursor-arrow,
         button:hover ~ .custom-cursor .cursor-arrow,
         .download-btn:hover ~ .custom-cursor .cursor-arrow,
@@ -93,19 +76,7 @@
             border-left-color: #a855f7;
         }
 
-        a:hover ~ .custom-cursor .cursor-glow,
-        button:hover ~ .custom-cursor .cursor-glow,
-        .download-btn:hover ~ .custom-cursor .cursor-glow,
-        .tab-btn:hover ~ .custom-cursor .cursor-glow,
-        .cheat-card:hover ~ .custom-cursor .cursor-glow,
-        .code-item:hover ~ .custom-cursor .cursor-glow,
-        .settings-btn:hover ~ .custom-cursor .cursor-glow,
-        .step:hover ~ .custom-cursor .cursor-glow,
-        .info-row:hover ~ .custom-cursor .cursor-glow {
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 70%);
-        }
-
-        /* Анимированный градиентный фон */
+        /* Фон */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -127,9 +98,7 @@
             pointer-events: none;
             z-index: 0;
             animation: float 15s infinite ease-in-out;
-            will-change: transform;
         }
-
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
             33% { transform: translate(30px, -30px) scale(1.1); }
@@ -148,7 +117,6 @@
             animation: particleFloat 6s infinite linear;
             box-shadow: 0 0 10px #6a4eff;
         }
-
         @keyframes particleFloat {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
             20% { opacity: 1; }
@@ -167,7 +135,6 @@
             animation: twinkle 4s infinite;
             pointer-events: none;
         }
-
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.5); }
@@ -189,10 +156,9 @@
             cursor: pointer;
             z-index: 100;
             border: 1px solid rgba(106, 78, 255, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             font-size: 24px;
         }
-
         .settings-btn:hover {
             transform: rotate(90deg);
             border-color: #6a4eff;
@@ -212,26 +178,12 @@
             z-index: 99;
             border: 1px solid rgba(106, 78, 255, 0.3);
             transform: translateX(400px);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .settings-panel.active {
-            transform: translateX(0);
-        }
-
-        .settings-panel h3 {
-            margin-bottom: 15px;
-            color: #6a4eff;
-        }
-
-        .settings-panel label {
-            display: block;
-            margin: 10px 0 5px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
+        .settings-panel.active { transform: translateX(0); }
+        .settings-panel h3 { margin-bottom: 15px; color: #6a4eff; }
+        .settings-panel label { display: block; margin: 10px 0 5px; font-size: 0.9rem; opacity: 0.8; }
         .settings-panel input, .settings-panel select {
             width: 100%;
             padding: 8px;
@@ -242,7 +194,7 @@
             cursor: pointer;
         }
 
-        /* Главный контейнер */
+        /* Контейнер */
         .container {
             position: relative;
             z-index: 2;
@@ -259,12 +211,11 @@
             border: 1px solid rgba(106, 78, 255, 0.3);
             padding: 40px;
             margin-bottom: 30px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s;
         }
-
         .glass-card::before {
             content: '';
             position: absolute;
@@ -275,17 +226,12 @@
             background: linear-gradient(90deg, transparent, rgba(106, 78, 255, 0.1), transparent);
             transition: left 0.6s ease;
         }
-
-        .glass-card:hover::before {
-            left: 100%;
-        }
-
+        .glass-card:hover::before { left: 100%; }
         .glass-card:hover {
             border-color: #6a4eff;
             box-shadow: 0 0 40px rgba(106, 78, 255, 0.3);
             transform: translateY(-5px);
         }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
@@ -300,25 +246,18 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 30px rgba(106, 78, 255, 0.3);
-            animation: titleGlow 3s infinite alternate, floatText 4s infinite ease-in-out;
+            animation: titleGlow 3s infinite alternate, floatText 4s infinite;
             letter-spacing: 2px;
         }
-
         @keyframes titleGlow {
             0% { text-shadow: 0 0 20px rgba(106, 78, 255, 0.3); }
             100% { text-shadow: 0 0 50px rgba(106, 78, 255, 0.8); }
         }
-
         @keyframes floatText {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 15px;
-        }
+        .subtitle { font-size: 1.2rem; color: rgba(255, 255, 255, 0.7); margin-top: 15px; }
 
         /* Кнопка скачивания */
         .download-btn {
@@ -331,7 +270,7 @@
             text-decoration: none;
             color: white;
             margin: 20px 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
             position: relative;
@@ -339,12 +278,10 @@
             box-shadow: 0 0 20px rgba(106, 78, 255, 0.4);
             animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 20px rgba(106, 78, 255, 0.4); }
             50% { box-shadow: 0 0 35px rgba(106, 78, 255, 0.7); }
         }
-
         .download-btn::before {
             content: '';
             position: absolute;
@@ -355,11 +292,7 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.5s;
         }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
+        .download-btn:hover::before { left: 100%; }
         .download-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 0 40px rgba(106, 78, 255, 0.8);
@@ -373,40 +306,36 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-
         .tab-btn {
             background: rgba(20, 20, 35, 0.8);
             border: 1px solid rgba(106, 78, 255, 0.3);
             padding: 12px 35px;
             border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             font-weight: 600;
             color: rgba(255,255,255,0.7);
             backdrop-filter: blur(5px);
         }
-
         .tab-btn.active {
             background: linear-gradient(135deg, #6a4eff, #a855f7);
             border-color: transparent;
             color: white;
             box-shadow: 0 0 25px rgba(106, 78, 255, 0.5);
         }
-
         .tab-btn:hover:not(.active) {
             border-color: #6a4eff;
             transform: translateY(-2px);
             color: white;
         }
 
-        /* Карточки читов */
+        /* Карточки читов с анимацией как раньше */
         .cheats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
-
         .cheat-card {
             background: rgba(20, 20, 40, 0.7);
             border-radius: 24px;
@@ -418,33 +347,27 @@
             backdrop-filter: blur(5px);
             animation: fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
         }
-
         .cheat-card:nth-child(1) { animation-delay: 0.1s; }
         .cheat-card:nth-child(2) { animation-delay: 0.2s; }
         .cheat-card:nth-child(3) { animation-delay: 0.3s; }
-
         @keyframes fadeInScale {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-
         .cheat-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: #6a4eff;
             box-shadow: 0 15px 35px rgba(106, 78, 255, 0.25);
         }
-
         .cheat-icon {
             font-size: 3.5rem;
             margin-bottom: 15px;
             animation: iconBounce 2s infinite;
         }
-
         @keyframes iconBounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
         }
-
         .cheat-name {
             font-size: 1.5rem;
             font-weight: 700;
@@ -454,13 +377,7 @@
             background-clip: text;
             color: transparent;
         }
-
-        .cheat-desc {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 20px;
-        }
-
+        .cheat-desc { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
         .cheat-status {
             display: inline-block;
             padding: 5px 18px;
@@ -471,64 +388,12 @@
             border: 1px solid rgba(0,255,100,0.3);
         }
 
-        /* Вкладка ИНФО */
-        .info-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 15px;
-            background: rgba(30, 30, 50, 0.3);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .info-row:hover {
-            background: rgba(50, 50, 80, 0.5);
-            transform: translateX(10px);
-        }
-
-        .info-icon {
-            font-size: 2.5rem;
-        }
-
-        /* Список кодов */
-        .codes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .code-item {
-            background: rgba(106, 78, 255, 0.1);
-            border: 1px solid rgba(106, 78, 255, 0.3);
-            border-radius: 15px;
-            padding: 12px;
-            text-align: center;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-
-        .code-item:hover {
-            background: rgba(106, 78, 255, 0.2);
-            transform: scale(1.05);
-            border-color: #6a4eff;
-        }
-
         /* Инструкция */
         .steps {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
         .step {
             display: flex;
             align-items: center;
@@ -536,16 +401,14 @@
             padding: 15px 20px;
             background: rgba(30, 30, 50, 0.5);
             border-radius: 20px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             border: 1px solid transparent;
         }
-
         .step:hover {
             background: rgba(50, 50, 80, 0.6);
             border-color: #6a4eff;
             transform: translateX(10px);
         }
-
         .step-number {
             width: 45px;
             height: 45px;
@@ -559,6 +422,29 @@
             box-shadow: 0 0 15px rgba(106, 78, 255, 0.5);
         }
 
+        /* Коды */
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .code-item {
+            background: rgba(106, 78, 255, 0.1);
+            border: 1px solid rgba(106, 78, 255, 0.3);
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .code-item:hover {
+            background: rgba(106, 78, 255, 0.2);
+            transform: scale(1.05);
+            border-color: #6a4eff;
+        }
+
         /* Статистика */
         .stats {
             display: flex;
@@ -567,21 +453,13 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
-
         .stat-item {
             text-align: center;
             padding: 10px 20px;
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
             backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
         }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            background: rgba(106, 78, 255, 0.1);
-        }
-
         .stat-number {
             font-size: 2rem;
             font-weight: 800;
@@ -590,11 +468,24 @@
             background-clip: text;
             color: transparent;
         }
+        .stat-label { font-size: 0.8rem; opacity: 0.7; }
 
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
+        /* Инфо */
+        .info-content { display: flex; flex-direction: column; gap: 20px; }
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: rgba(30, 30, 50, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s;
         }
+        .info-row:hover {
+            background: rgba(50, 50, 80, 0.5);
+            transform: translateX(10px);
+        }
+        .info-icon { font-size: 2.5rem; }
 
         /* Уведомление */
         .toast {
@@ -611,7 +502,6 @@
             box-shadow: 0 0 20px rgba(106,78,255,0.5);
             animation: toastFade 2s ease-out forwards;
         }
-
         @keyframes toastFade {
             0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
             20% { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -632,27 +522,21 @@
             body { cursor: auto; }
             * { cursor: auto; }
         }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0f; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #6a4eff, #a855f7); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-<div class="gradient-bg" id="gradientBg"></div>
+<div class="gradient-bg"></div>
 <div id="neon-balls"></div>
 <div id="particles"></div>
 <div id="stars"></div>
 
-<!-- Кастомная мышка - неоновый курсор как в Windows -->
 <div class="custom-cursor" id="customCursor">
     <div class="cursor-glow"></div>
     <div class="cursor-arrow"></div>
 </div>
 
 <div class="settings-btn" id="settingsBtn">⚙️</div>
-
 <div class="settings-panel" id="settingsPanel">
     <h3>🎨 КАСТОМИЗАЦИЯ</h3>
     <label>Скорость анимации:</label>
@@ -679,18 +563,9 @@
         </a>
         
         <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number" id="downloadCount">0</div>
-                <div class="stat-label">скачиваний</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">3+</div>
-                <div class="stat-label">читов</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">7+</div>
-                <div class="stat-label">кодов</div>
-            </div>
+            <div class="stat-item"><div class="stat-number">3,337</div><div class="stat-label">скачиваний</div></div>
+            <div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">читов</div></div>
+            <div class="stat-item"><div class="stat-number">7+</div><div class="stat-label">кодов</div></div>
         </div>
     </div>
 
@@ -749,7 +624,7 @@
 </div>
 
 <script>
-    // Кастомная мышка - неоновый курсор
+    // Кастомная мышка - оригинальная
     const cursor = document.getElementById('customCursor');
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
@@ -768,7 +643,6 @@
     }
     animateCursor();
     
-    // Скрываем стандартный курсор
     document.body.style.cursor = 'none';
     document.querySelectorAll('a, button, .tab-btn, .cheat-card, .code-item, .settings-btn, .step, .info-row').forEach(el => {
         el.style.cursor = 'none';
@@ -781,75 +655,154 @@
         cursor.style.opacity = '1';
     });
 
-    // Функция уведомления
-    function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
+    function showToast(msg) {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2000);
+    }
 
     // Копирование кодов
-    document.querySelectorAll('.code-item').forEach(el => { el.addEventListener('click', () => { navigator.clipboard.writeText(el.getAttribute('data-code')); showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`); }); });
-
-    // РЕАЛЬНЫЙ СЧЕТЧИК СКАЧИВАНИЙ
-    let downloadCount = 0;
-    const downloadCountEl = document.getElementById('downloadCount');
-    
-    fetch('https://api.countapi.xyz/get/ambixloader/downloads')
-        .then(res => res.json())
-        .then(data => {
-            if (data && data.value) {
-                downloadCount = data.value;
-                downloadCountEl.textContent = downloadCount.toLocaleString();
-            } else {
-                downloadCountEl.textContent = "0";
-            }
-        })
-        .catch(() => {
-            downloadCountEl.textContent = "0";
+    document.querySelectorAll('.code-item').forEach(el => {
+        el.addEventListener('click', () => {
+            navigator.clipboard.writeText(el.getAttribute('data-code'));
+            showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`);
         });
-    
-    document.getElementById('downloadBtn').addEventListener('click', function(e) {
-        fetch('https://api.countapi.xyz/hit/ambixloader/downloads')
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.value) {
-                    downloadCount = data.value;
-                    downloadCountEl.textContent = downloadCount.toLocaleString();
-                }
-            })
-            .catch(() => {});
-        
+    });
+
+    document.getElementById('downloadBtn').addEventListener('click', () => {
         showToast('⬇️ Скачивание началось!');
     });
 
     // Настройки
-    const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel'), animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const animSpeed = document.getElementById('animSpeed');
+    const glowIntensity = document.getElementById('glowIntensity');
+    const colorScheme = document.getElementById('colorScheme');
+
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
-    document.addEventListener('click', (e) => { if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) settingsPanel.classList.remove('active'); });
+    document.addEventListener('click', (e) => {
+        if (!settingsBtn.contains(e.target) && !settingsPanel.contains(e.target)) {
+            settingsPanel.classList.remove('active');
+        }
+    });
     
-    function setAnimSpeed(s) { document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => { const a = getComputedStyle(el).animationName; if (a === 'float') el.style.animationDuration = (15 * (2 / s)) + 's'; else if (a === 'particleFloat') el.style.animationDuration = (6 * (2 / s)) + 's'; else if (a === 'twinkle') el.style.animationDuration = (4 * (2 / s)) + 's'; }); document.querySelectorAll('.cheat-icon').forEach(el => el.style.animationDuration = (2 * (2 / s)) + 's'); }
-    function setGlow(i) { document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`); }
-    function setColor(c) { let p, s; if(c==='blue'){p='#3b82f6';s='#06b6d4';}else if(c==='purple'){p='#8b5cf6';s='#a855f7';}else if(c==='pink'){p='#ec4899';s='#f43f5e';}else if(c==='green'){p='#10b981';s='#34d399';}else{p='#6a4eff';s='#a855f7';}
-        document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
-        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.background = `linear-gradient(135deg, ${p}, ${s})`);
-        document.querySelectorAll('.stat-number, h1').forEach(el => el.style.webkitBackgroundClip = 'text');
-        document.querySelectorAll('.cursor-arrow').forEach(el => el.style.borderLeftColor = p);
+    function setAnimSpeed(s) {
+        document.querySelectorAll('.neon-ball, .particle, .star').forEach(el => {
+            const a = getComputedStyle(el).animationName;
+            if (a === 'float') el.style.animationDuration = (15 * (2 / s)) + 's';
+            else if (a === 'particleFloat') el.style.animationDuration = (6 * (2 / s)) + 's';
+            else if (a === 'twinkle') el.style.animationDuration = (4 * (2 / s)) + 's';
+        });
+        document.querySelectorAll('.cheat-icon').forEach(el => el.style.animationDuration = (2 * (2 / s)) + 's');
     }
-    animSpeed.oninput = (e) => { setAnimSpeed(e.target.value); localStorage.setItem('ambix_anim_speed', e.target.value); };
-    glowIntensity.oninput = (e) => { setGlow(e.target.value); localStorage.setItem('ambix_glow_intensity', e.target.value); };
-    colorScheme.onchange = (e) => { setColor(e.target.value); localStorage.setItem('ambix_color_scheme', e.target.value); };
     
-    const savedSpeed = localStorage.getItem('ambix_anim_speed'), savedGlow = localStorage.getItem('ambix_glow_intensity'), savedColor = localStorage.getItem('ambix_color_scheme');
+    function setGlow(i) {
+        document.querySelectorAll('.glass-card, .download-btn, .tab-btn.active').forEach(el => {
+            el.style.boxShadow = `0 0 ${20 * i}px rgba(106, 78, 255, ${0.3 * i})`;
+        });
+    }
+    
+    function setColor(c) {
+        let p, s;
+        if(c === 'blue') { p = '#3b82f6'; s = '#06b6d4'; }
+        else if(c === 'purple') { p = '#8b5cf6'; s = '#a855f7'; }
+        else if(c === 'pink') { p = '#ec4899'; s = '#f43f5e'; }
+        else if(c === 'green') { p = '#10b981'; s = '#34d399'; }
+        else { p = '#6a4eff'; s = '#a855f7'; }
+        
+        document.querySelectorAll('.download-btn, .tab-btn.active, .step-number').forEach(el => {
+            el.style.background = `linear-gradient(135deg, ${p}, ${s})`;
+        });
+        document.querySelectorAll('.stat-number, h1').forEach(el => {
+            el.style.background = `linear-gradient(135deg, ${p}, ${s})`;
+            el.style.webkitBackgroundClip = 'text';
+        });
+        document.querySelectorAll('.cursor-arrow').forEach(el => {
+            el.style.borderLeftColor = p;
+        });
+    }
+    
+    animSpeed.oninput = (e) => {
+        setAnimSpeed(e.target.value);
+        localStorage.setItem('ambix_anim_speed', e.target.value);
+    };
+    glowIntensity.oninput = (e) => {
+        setGlow(e.target.value);
+        localStorage.setItem('ambix_glow_intensity', e.target.value);
+    };
+    colorScheme.onchange = (e) => {
+        setColor(e.target.value);
+        localStorage.setItem('ambix_color_scheme', e.target.value);
+    };
+    
+    const savedSpeed = localStorage.getItem('ambix_anim_speed');
+    const savedGlow = localStorage.getItem('ambix_glow_intensity');
+    const savedColor = localStorage.getItem('ambix_color_scheme');
+    
     if(savedSpeed){ animSpeed.value = savedSpeed; setAnimSpeed(savedSpeed); }
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
     // Анимации
-    function createNeonBalls() { const cont = document.getElementById('neon-balls'); const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b']; for(let i=0;i<25;i++){ const b = document.createElement('div'); b.className = 'neon-ball'; const s = 100 + Math.random() * 300; b.style.width = s+'px'; b.style.height = s+'px'; b.style.left = Math.random()*100+'%'; b.style.top = Math.random()*100+'%'; b.style.background = cols[Math.floor(Math.random()*cols.length)]; b.style.opacity = 0.05+Math.random()*0.15; b.style.animationDelay = Math.random()*8+'s'; b.style.animationDuration = 12+Math.random()*12+'s'; cont.appendChild(b); } }
-    function createParticles() { const cont = document.getElementById('particles'); for(let i=0;i<120;i++){ const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random()*100+'%'; p.style.animationDelay = Math.random()*10+'s'; p.style.animationDuration = 4+Math.random()*8+'s'; p.style.width = (1.5+Math.random()*4)+'px'; p.style.height = p.style.width; cont.appendChild(p); } }
-    function createStars() { const cont = document.getElementById('stars'); for(let i=0;i<250;i++){ const s = document.createElement('div'); s.className = 'star'; s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%'; s.style.animationDelay = Math.random()*5+'s'; s.style.animationDuration = (2+Math.random()*5)+'s'; cont.appendChild(s); } }
+    function createNeonBalls() {
+        const cont = document.getElementById('neon-balls');
+        const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
+        for(let i=0;i<25;i++){
+            const b = document.createElement('div'); b.className = 'neon-ball';
+            const s = 100 + Math.random() * 300;
+            b.style.width = s+'px'; b.style.height = s+'px';
+            b.style.left = Math.random()*100+'%'; b.style.top = Math.random()*100+'%';
+            b.style.background = cols[Math.floor(Math.random()*cols.length)];
+            b.style.opacity = 0.05+Math.random()*0.15;
+            b.style.animationDelay = Math.random()*8+'s';
+            b.style.animationDuration = 12+Math.random()*12+'s';
+            cont.appendChild(b);
+        }
+    }
+    function createParticles() {
+        const cont = document.getElementById('particles');
+        for(let i=0;i<120;i++){
+            const p = document.createElement('div'); p.className = 'particle';
+            p.style.left = Math.random()*100+'%';
+            p.style.animationDelay = Math.random()*10+'s';
+            p.style.animationDuration = 4+Math.random()*8+'s';
+            p.style.width = (1.5+Math.random()*4)+'px';
+            p.style.height = p.style.width;
+            cont.appendChild(p);
+        }
+    }
+    function createStars() {
+        const cont = document.getElementById('stars');
+        for(let i=0;i<250;i++){
+            const s = document.createElement('div'); s.className = 'star';
+            s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%';
+            s.style.animationDelay = Math.random()*5+'s';
+            s.style.animationDuration = (2+Math.random()*5)+'s';
+            cont.appendChild(s);
+        }
+    }
     createNeonBalls(); createParticles(); createStars();
 
     // Табы
-    const btns = document.querySelectorAll('.tab-btn'), tabs = { cheats: document.getElementById('tab-cheats'), install: document.getElementById('tab-install'), info: document.getElementById('tab-info'), codes: document.getElementById('tab-codes') };
-    btns.forEach(btn => { btn.addEventListener('click', () => { const id = btn.getAttribute('data-tab'); btns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); Object.keys(tabs).forEach(k => { if(tabs[k]) tabs[k].style.display = 'none'; }); if(tabs[id]) tabs[id].style.display = 'block'; }); });
+    const btns = document.querySelectorAll('.tab-btn');
+    const tabs = {
+        cheats: document.getElementById('tab-cheats'),
+        install: document.getElementById('tab-install'),
+        info: document.getElementById('tab-info'),
+        codes: document.getElementById('tab-codes')
+    };
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-tab');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            Object.keys(tabs).forEach(k => { if(tabs[k]) tabs[k].style.display = 'none'; });
+            if(tabs[id]) tabs[id].style.display = 'block';
+        });
+    });
 </script>
 </body>
 </html>
