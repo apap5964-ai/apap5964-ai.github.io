@@ -346,16 +346,14 @@
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-    // Глобальная функция для YouTube API (вызывается библиотекой)
     function onYouTubeIframeAPIReady() {
         window.dispatchEvent(new Event('youtube-ready'));
     }
 </script>
 <script type="module">
-    // ========== FIREBASE ==========
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDCaTAB8wBL-VyFXwo5UlBUwwb51LRb2a4",
@@ -368,9 +366,9 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const storage = getStorage(app);
+    const db = getFirestore(app);
 
-    // ========== КАСТОМНЫЙ КУРСОР ==========
+    // КАСТОМНЫЙ КУРСОР
     const cursor = document.getElementById('customCursor');
     let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
     document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
@@ -385,7 +383,7 @@
     document.body.style.cursor = 'none';
     document.querySelectorAll('*').forEach(el => el.style.cursor = 'none');
 
-    // ========== АВТОРИЗАЦИЯ ==========
+    // АВТОРИЗАЦИЯ
     const authModal = document.getElementById('authModal');
     const showAuthBtn = document.getElementById('showAuthBtn');
     const closeAuth = document.getElementById('closeAuth');
@@ -417,7 +415,6 @@
     showLoginTab.addEventListener('click', (e) => { e.preventDefault(); switchTab('login'); });
     forgotLink.addEventListener('click', (e) => { e.preventDefault(); alert('🔐 Восстановление пароля появится позже'); });
 
-    // Вход
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const usernameOrEmail = document.getElementById('loginUsername').value;
@@ -431,7 +428,6 @@
         }
     });
 
-    // Регистрация
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const username = document.getElementById('regUsername').value;
@@ -442,6 +438,12 @@
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(userCredential.user, { displayName: username });
+            // Создаём документ в Firestore
+            await setDoc(doc(db, "users", userCredential.user.uid), {
+                displayName: username,
+                email: email,
+                avatarBase64: ""
+            });
             closeModal();
             showToast(`🎉 Регистрация успешна! ${username}`);
         } catch (error) {
@@ -449,7 +451,6 @@
         }
     });
 
-    // Отслеживание состояния пользователя
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             const displayName = user.displayName || user.email.split('@')[0];
@@ -457,12 +458,12 @@
             loginBtnHeader.title = user.email;
             profileDisplayName.textContent = displayName;
             profileEmail.textContent = user.email;
-            // Загружаем аватар, если есть
-            try {
-                const avatarRef = ref(storage, `avatars/${user.uid}`);
-                const url = await getDownloadURL(avatarRef);
-                avatarImg.src = url;
-            } catch (e) {
+            
+            // Загружаем данные из Firestore
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists() && userDoc.data().avatarBase64) {
+                avatarImg.src = userDoc.data().avatarBase64;
+            } else {
                 avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
             }
         } else {
@@ -474,22 +475,27 @@
         }
     });
 
-    // Загрузка аватарки
+    // Загрузка аватарки в Base64 и сохранение в Firestore
     avatarUpload.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file || !auth.currentUser) return;
-        const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
-        try {
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
-            avatarImg.src = url;
-            showToast('✅ Аватарка обновлена!');
-        } catch (error) {
-            alert('Ошибка загрузки: ' + error.message);
-        }
+        
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            const base64 = event.target.result;
+            try {
+                await setDoc(doc(db, "users", auth.currentUser.uid), {
+                    avatarBase64: base64
+                }, { merge: true });
+                avatarImg.src = base64;
+                showToast('✅ Аватарка обновлена!');
+            } catch (error) {
+                alert('Ошибка сохранения: ' + error.message);
+            }
+        };
+        reader.readAsDataURL(file);
     });
 
-    // Выход
     document.getElementById('logoutBtn').addEventListener('click', async () => {
         await signOut(auth);
         showToast('🚪 Вы вышли');
@@ -501,7 +507,6 @@
         }
     });
 
-    // ========== ТОСТЫ ==========
     function showToast(msg) {
         const t = document.createElement('div');
         t.className = 'toast';
@@ -510,7 +515,7 @@
         setTimeout(() => t.remove(), 2000);
     }
 
-    // ========== КОПИРОВАНИЕ КЛЮЧЕЙ ==========
+    // КОПИРОВАНИЕ КЛЮЧЕЙ
     document.querySelectorAll('.code-item').forEach(el => {
         el.addEventListener('click', () => {
             navigator.clipboard.writeText(el.getAttribute('data-code'));
@@ -519,7 +524,7 @@
     });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
-    // ========== YOUTUBE РАДИО ==========
+    // YOUTUBE РАДИО
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -554,9 +559,7 @@
     function playTrack() {
         const track = playlist[currentTrackIndex];
         currentTrackEl.textContent = track.title;
-        if (player && player.loadVideoById) {
-            player.loadVideoById(track.id);
-        }
+        if (player && player.loadVideoById) player.loadVideoById(track.id);
         document.querySelectorAll('.playlist-item').forEach((item, idx) => item.classList.toggle('active', idx === currentTrackIndex));
         if (isPlaying && player) player.playVideo();
         else if (player) { player.playVideo(); isPlaying = true; playPauseBtn.textContent = '⏸'; }
@@ -596,7 +599,7 @@
     volumeSlider.addEventListener('input', setVolume);
     loadPlaylist();
 
-    // ========== НАСТРОЙКИ ==========
+    // НАСТРОЙКИ
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
@@ -634,7 +637,7 @@
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
-    // ========== ТАБЫ ==========
+    // ТАБЫ
     const btns = document.querySelectorAll('.tab-btn');
     const tabs = {
         cheats: document.getElementById('tab-cheats'),
@@ -654,7 +657,7 @@
         });
     });
 
-    // ========== ФОН ==========
+    // ФОН
     function createNeonBalls() {
         const cont = document.getElementById('neon-balls');
         const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
