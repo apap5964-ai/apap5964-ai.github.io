@@ -9,9 +9,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body { background: #0a0a0f; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; position: relative; min-height: 100vh; cursor: none !important; }
+        body.custom-cursor-disabled, body.custom-cursor-disabled * { cursor: auto !important; }
         ::-webkit-scrollbar { width: 0; background: transparent; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* Кастомный курсор */
         .custom-cursor { position: fixed; width: 32px; height: 32px; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); will-change: left, top; filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8)); }
         .cursor-arrow { position: absolute; width: 0; height: 0; border-left: 12px solid #6a4eff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; top: 2px; left: 2px; filter: drop-shadow(0 0 4px #6a4eff); }
         .cursor-glow { position: absolute; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(106, 78, 255, 0.4), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: glowPulse 2s infinite; }
@@ -142,24 +144,14 @@
         .info-row:hover { background: rgba(50, 50, 80, 0.5); transform: translateX(10px); }
         .info-icon { font-size: 2rem; }
 
-        .profile-header { display: flex; align-items: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; }
-        .profile-avatar { position: relative; width: 120px; height: 120px; }
-        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.5); }
-        .profile-avatar input { display: none; }
-        .avatar-upload-btn { position: absolute; bottom: 0; right: 0; background: #6a4eff; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid white; font-size: 18px; }
-        .profile-info { flex: 1; }
-        .profile-info h3 { font-size: 2rem; margin-bottom: 5px; }
-        .profile-info p { opacity: 0.7; margin-bottom: 15px; }
-        .profile-stats { display: flex; gap: 20px; }
-        .profile-stat { text-align: center; }
-        .profile-stat .num { font-size: 1.5rem; font-weight: 700; color: #6a4eff; }
-
-        .search-section { margin-top: 30px; padding: 20px; background: rgba(20,20,40,0.5); border-radius: 20px; }
-        .search-section h3 { margin-bottom: 15px; }
-        .search-box { display: flex; gap: 10px; }
-        .search-box input { flex: 1; padding: 12px 20px; background: rgba(10,10,20,0.6); border: 1px solid rgba(106,78,255,0.3); border-radius: 40px; color: white; outline: none; }
-        .search-box button { padding: 12px 25px; background: linear-gradient(135deg, #6a4eff, #a855f7); border: none; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; }
-        .search-result { margin-top: 15px; }
+        /* Поиск пользователей (тест) */
+        .search-fab { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #6a4eff, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; box-shadow: 0 0 20px rgba(106,78,255,0.5); z-index: 98; transition: 0.3s; }
+        .search-fab:hover { transform: scale(1.1); }
+        .search-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; }
+        .search-modal.active { display: flex; }
+        .search-card { width: 400px; background: rgba(20,20,40,0.9); border-radius: 30px; padding: 30px; }
+        .search-card h3 { margin-bottom: 20px; color: #6a4eff; }
+        .search-result { margin-top: 20px; }
 
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #6a4eff, #a855f7); color: white; padding: 10px 20px; border-radius: 50px; z-index: 1000; font-weight: bold; font-size: 0.9rem; box-shadow: 0 0 20px rgba(106,78,255,0.5); animation: toastFade 2s ease-out forwards; }
         @keyframes toastFade { 0% { opacity: 0; transform: translateX(-50%) translateY(20px); } 20% { opacity: 1; transform: translateX(-50%) translateY(0); } 80% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
@@ -183,12 +175,10 @@
     <div class="auth-dropdown">
         <button class="auth-btn" id="authActionBtn">🔐 ВОЙТИ</button>
         <div class="dropdown-menu" id="authDropdown">
-            <!-- гость -->
             <div id="guestMenu">
                 <div class="menu-item" id="menuLogin">🔑 Войти</div>
                 <div class="menu-item" id="menuRegister">📝 Регистрация</div>
             </div>
-            <!-- пользователь -->
             <div id="userMenu" style="display: none;">
                 <div class="profile-mini">
                     <img id="dropdownAvatar" src="https://via.placeholder.com/45" alt="Ava">
@@ -198,7 +188,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="menu-item" id="menuProfile">👤 Мой профиль</div>
+                <div class="menu-item" id="menuChangeAvatar">📷 Сменить аватар</div>
                 <div class="menu-item" id="menuLogout">🚪 Выйти</div>
             </div>
         </div>
@@ -291,7 +281,6 @@
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
         <div class="tab-btn" data-tab="info">ℹ️ ИНФО</div>
         <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
-        <div class="tab-btn" data-tab="profile" id="profileTabBtn" style="display: none;">👤 ПРОФИЛЬ</div>
     </div>
 
     <div id="tab-cheats" class="glass-card" style="display: block;">
@@ -362,37 +351,28 @@
         </div>
         <p style="text-align: center; margin-top: 15px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
+</div>
 
-    <div id="tab-profile" class="glass-card" style="display: none;">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <img id="avatarImg" src="https://via.placeholder.com/120/6a4eff/ffffff?text=?" alt="Avatar">
-                <label for="avatarUpload" class="avatar-upload-btn">📷</label>
-                <input type="file" id="avatarUpload" accept="image/*">
-            </div>
-            <div class="profile-info">
-                <h3 id="profileDisplayName">Гость</h3>
-                <p id="profileEmail">Не авторизован</p>
-                <div class="profile-stats">
-                    <div class="profile-stat"><div class="num" id="downloadsCount">0</div><div>Скачиваний</div></div>
-                    <div class="profile-stat"><div class="num" id="cheatsCount">0</div><div>Читов</div></div>
-                </div>
-            </div>
+<!-- Тестовый поиск пользователей (FAB) -->
+<div class="search-fab" id="searchFab">🔍</div>
+<div class="search-modal" id="searchModal">
+    <div class="search-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3>🔍 Поиск пользователя</h3>
+            <span id="closeSearchModal" style="font-size: 24px; cursor: pointer;">&times;</span>
         </div>
-        <div style="margin-top: 20px;">
-            <button class="auth-submit" id="logoutBtn" style="width: auto; padding: 12px 30px;">🚪 Выйти</button>
+        <div class="input-group">
+            <input type="email" id="searchEmailInput" placeholder="Введите email">
+            <span class="input-icon">📧</span>
         </div>
-        <!-- Тестовая функция: поиск пользователя по email -->
-        <div class="search-section">
-            <h3>🔍 Тестовый поиск пользователя</h3>
-            <div class="search-box">
-                <input type="email" id="searchEmail" placeholder="Введите email пользователя">
-                <button id="searchUserBtn">Найти</button>
-            </div>
-            <div id="searchResult" class="search-result"></div>
-        </div>
+        <button class="auth-submit" id="searchUserBtn" style="margin-top: 10px;">Найти</button>
+        <div id="searchResult" class="search-result"></div>
+        <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">Тестовая функция — поиск по email в Firestore</p>
     </div>
 </div>
+
+<!-- Скрытый input для смены аватарки -->
+<input type="file" id="hiddenAvatarUpload" accept="image/*" style="display: none;">
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
@@ -446,9 +426,9 @@
     const dropdownEmail = document.getElementById('dropdownEmail');
     const menuLogin = document.getElementById('menuLogin');
     const menuRegister = document.getElementById('menuRegister');
-    const menuProfile = document.getElementById('menuProfile');
+    const menuChangeAvatar = document.getElementById('menuChangeAvatar');
     const menuLogout = document.getElementById('menuLogout');
-    const profileTabBtn = document.getElementById('profileTabBtn');
+    const hiddenAvatarUpload = document.getElementById('hiddenAvatarUpload');
 
     authBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -469,11 +449,6 @@
     const showRegisterTab = document.getElementById('showRegisterTab');
     const showLoginTab = document.getElementById('showLoginTab');
     const forgotLink = document.getElementById('forgotPasswordLink');
-    const avatarImg = document.getElementById('avatarImg');
-    const avatarUpload = document.getElementById('avatarUpload');
-    const profileDisplayName = document.getElementById('profileDisplayName');
-    const profileEmail = document.getElementById('profileEmail');
-    const logoutBtn = document.getElementById('logoutBtn');
 
     function openModal() { authModal.classList.add('active'); dropdown.classList.remove('active'); }
     function closeModalFn() { authModal.classList.remove('active'); }
@@ -492,7 +467,10 @@
 
     menuLogin.addEventListener('click', () => { openModal(); switchTab('login'); });
     menuRegister.addEventListener('click', () => { openModal(); switchTab('register'); });
-    menuProfile.addEventListener('click', () => { profileTabBtn.click(); dropdown.classList.remove('active'); });
+    menuChangeAvatar.addEventListener('click', () => {
+        if (auth.currentUser) hiddenAvatarUpload.click();
+        dropdown.classList.remove('active');
+    });
     menuLogout.addEventListener('click', async () => {
         await signOut(auth);
         showToast('🚪 Вы вышли');
@@ -540,28 +518,21 @@
             authBtn.innerHTML = `👤 ${displayName}`;
             guestMenu.style.display = 'none';
             userMenu.style.display = 'block';
-            profileTabBtn.style.display = 'block';
             
             dropdownName.textContent = displayName;
             dropdownEmail.textContent = user.email;
             
             const cachedAvatar = localStorage.getItem(`avatar_${user.uid}`);
             if (cachedAvatar) {
-                avatarImg.src = cachedAvatar;
                 dropdownAvatar.src = cachedAvatar;
             } else {
-                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
                 dropdownAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=45`;
             }
-            
-            profileDisplayName.textContent = displayName;
-            profileEmail.textContent = user.email;
             
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists() && userDoc.data().avatarBase64) {
                     const base64 = userDoc.data().avatarBase64;
-                    avatarImg.src = base64;
                     dropdownAvatar.src = base64;
                     localStorage.setItem(`avatar_${user.uid}`, base64);
                 }
@@ -572,15 +543,12 @@
             authBtn.innerHTML = '🔐 ВОЙТИ';
             guestMenu.style.display = 'block';
             userMenu.style.display = 'none';
-            profileTabBtn.style.display = 'none';
-            profileDisplayName.textContent = 'Гость';
-            profileEmail.textContent = 'Не авторизован';
-            avatarImg.src = 'https://via.placeholder.com/120/6a4eff/ffffff?text=?';
             dropdownAvatar.src = 'https://via.placeholder.com/45';
         }
     });
 
-    avatarUpload.addEventListener('change', async (e) => {
+    // Загрузка аватарки
+    hiddenAvatarUpload.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file || !auth.currentUser) return;
         const reader = new FileReader();
@@ -588,7 +556,6 @@
             const base64 = event.target.result;
             try {
                 await setDoc(doc(db, "users", auth.currentUser.uid), { avatarBase64: base64 }, { merge: true });
-                avatarImg.src = base64;
                 dropdownAvatar.src = base64;
                 localStorage.setItem(`avatar_${auth.currentUser.uid}`, base64);
                 showToast('✅ Аватарка обновлена!');
@@ -597,43 +564,6 @@
             }
         };
         reader.readAsDataURL(file);
-    });
-
-    logoutBtn.addEventListener('click', async () => {
-        await signOut(auth);
-        showToast('🚪 Вы вышли');
-    });
-
-    // Тестовый поиск пользователя по email
-    document.getElementById('searchUserBtn').addEventListener('click', async () => {
-        const email = document.getElementById('searchEmail').value.trim();
-        const resultDiv = document.getElementById('searchResult');
-        if (!email) {
-            resultDiv.innerHTML = '<p style="color: #ff6b6b;">Введите email</p>';
-            return;
-        }
-        try {
-            const q = query(collection(db, "users"), where("email", "==", email));
-            const snapshot = await getDocs(q);
-            if (snapshot.empty) {
-                resultDiv.innerHTML = '<p style="color: #ff6b6b;">Пользователь не найден</p>';
-            } else {
-                const userData = snapshot.docs[0].data();
-                const avatar = userData.avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.displayName)}&background=6a4eff&color=fff&size=60`;
-                resultDiv.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(106,78,255,0.1); border-radius: 15px;">
-                        <img src="${avatar}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #6a4eff;">
-                        <div>
-                            <h4>${userData.displayName}</h4>
-                            <p style="opacity: 0.7;">${email}</p>
-                        </div>
-                    </div>
-                `;
-            }
-        } catch (error) {
-            resultDiv.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска</p>';
-            console.error(error);
-        }
     });
 
     function showToast(msg) {
@@ -772,8 +702,7 @@
         radio: document.getElementById('tab-radio'),
         install: document.getElementById('tab-install'),
         info: document.getElementById('tab-info'),
-        codes: document.getElementById('tab-codes'),
-        profile: document.getElementById('tab-profile')
+        codes: document.getElementById('tab-codes')
     };
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -783,6 +712,48 @@
             Object.keys(tabs).forEach(k => { if(tabs[k]) tabs[k].style.display = 'none'; });
             if(tabs[id]) tabs[id].style.display = 'block';
         });
+    });
+
+    // Тестовый поиск пользователей (модальное окно)
+    const searchFab = document.getElementById('searchFab');
+    const searchModal = document.getElementById('searchModal');
+    const closeSearchModal = document.getElementById('closeSearchModal');
+    const searchEmailInput = document.getElementById('searchEmailInput');
+    const searchUserBtn = document.getElementById('searchUserBtn');
+    const searchResult = document.getElementById('searchResult');
+
+    searchFab.addEventListener('click', () => searchModal.classList.add('active'));
+    closeSearchModal.addEventListener('click', () => searchModal.classList.remove('active'));
+    searchModal.addEventListener('click', (e) => { if (e.target === searchModal) searchModal.classList.remove('active'); });
+
+    searchUserBtn.addEventListener('click', async () => {
+        const email = searchEmailInput.value.trim();
+        if (!email) {
+            searchResult.innerHTML = '<p style="color: #ff6b6b;">Введите email</p>';
+            return;
+        }
+        try {
+            const q = query(collection(db, "users"), where("email", "==", email));
+            const snapshot = await getDocs(q);
+            if (snapshot.empty) {
+                searchResult.innerHTML = '<p style="color: #ff6b6b;">Пользователь не найден</p>';
+            } else {
+                const userData = snapshot.docs[0].data();
+                const avatar = userData.avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.displayName)}&background=6a4eff&color=fff&size=60`;
+                searchResult.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(106,78,255,0.1); border-radius: 15px;">
+                        <img src="${avatar}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #6a4eff;">
+                        <div>
+                            <h4>${userData.displayName}</h4>
+                            <p style="opacity: 0.7;">${email}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            searchResult.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска (возможно, нет прав)</p>';
+            console.error(error);
+        }
     });
 
     // Фон
