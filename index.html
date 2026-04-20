@@ -561,12 +561,15 @@
 
     // YouTube Radio
     const playlist = [
-        { id: "jfKfPfyJRdk", title: "lofi hip hop radio 📚" },
-        { id: "5qap5aO4i9A", title: "jazz/lofi hip hop radio 🎷" },
-        { id: "DWcJFNfaw9c", title: "synthwave radio 🌌" },
-        { id: "4xDzrJKXOOY", title: "retrowave / synthwave mix" }
-    ];
-    let currentTrackIndex = 0;
+    { id: "nE0LqrB-vvY", title: "Трек 1" },
+    { id: "mz95kGOCq10", title: "Трек 2" },
+    { id: "7n9wvC_fyq0", title: "Трек 3" },
+    { id: "CNGE3sFBjys", title: "Трек 4" },
+    { id: "YAjb2dIAfoo", title: "Трек 5" },
+    { id: "XPCY9O1onGQ", title: "Трек 6" },
+    { id: "tn2vbytgvpk", title: "Трек 7" }
+  ];
+  let currentTrackIndex = 0;
     let player;
     let isPlaying = false;
     const playPauseBtn = document.getElementById('playPauseBtn');
@@ -597,25 +600,42 @@
         else if (player) { player.playVideo(); isPlaying = true; playPauseBtn.textContent = '⏸'; }
     }
 
-    window.addEventListener('youtube-ready', () => {
-        player = new YT.Player('youtube-player', {
-            height: '0', width: '0',
-            videoId: playlist[0].id,
-            playerVars: { autoplay: 1, controls: 0, disablekb: 1, modestbranding: 1, rel: 0, showinfo: 0 },
-            events: {
-                onReady: () => {
-                    player.setVolume(volumeSlider.value * 100);
-                    currentTrackEl.textContent = playlist[0].title;
+window.addEventListener('youtube-ready', () => {
+    if (player) return; // предотвращаем повторную инициализацию
+    player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: playlist[0].id,
+        playerVars: {
+            autoplay: 1,
+            controls: 0,
+            disablekb: 1,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            playsinline: 1
+        },
+        events: {
+            onReady: (event) => {
+                player.setVolume(volumeSlider.value * 100);
+                currentTrackEl.textContent = playlist[0].title;
+                // Принудительно запускаем воспроизведение
+                setTimeout(() => {
                     player.playVideo();
                     isPlaying = true;
                     playPauseBtn.textContent = '⏸';
-                    loadPlaylist();
-                },
-                onStateChange: (event) => { if (event.data === YT.PlayerState.ENDED) nextTrack(); }
+                }, 100);
+                loadPlaylist();
+            },
+            onStateChange: (event) => {
+                if (event.data === YT.PlayerState.ENDED) {
+                    nextTrack();
+                }
             }
-        });
+        }
     });
-
+});
     function playPause() {
         if (!player) return;
         if (isPlaying) { player.pauseVideo(); playPauseBtn.textContent = '▶'; isPlaying = false; }
