@@ -32,8 +32,8 @@
         .auth-dropdown { position: relative; margin-left: auto; }
         .auth-btn { background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
         .auth-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
-        .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; opacity: 0; transform: translateY(-10px); transition: opacity 0.2s, transform 0.2s; }
-        .dropdown-menu.active { display: block; opacity: 1; transform: translateY(0); }
+        .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; opacity: 0; transform: scale(0.9) translateY(-10px); transition: opacity 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .dropdown-menu.active { display: block; opacity: 1; transform: scale(1) translateY(0); }
         .dropdown-menu .menu-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; color: white; }
         .dropdown-menu .menu-item:hover { background: rgba(106, 78, 255, 0.2); transform: translateX(5px); }
         .dropdown-menu hr { margin: 10px 0; border: 0.5px solid rgba(106, 78, 255, 0.2); }
@@ -130,10 +130,6 @@
         .step { display: flex; align-items: center; gap: 20px; padding: 12px 20px; background: rgba(30, 30, 50, 0.5); border-radius: 20px; transition: all 0.3s; border: 1px solid transparent; }
         .step:hover { background: rgba(50, 50, 80, 0.6); border-color: #6a4eff; transform: translateX(10px); }
         .step-number { width: 40px; height: 40px; background: linear-gradient(135deg, #6a4eff, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 0 15px rgba(106, 78, 255, 0.5); }
-
-        .codes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
-        .code-item { background: rgba(106, 78, 255, 0.1); border: 1px solid rgba(106, 78, 255, 0.3); border-radius: 15px; padding: 10px; text-align: center; font-weight: 700; transition: all 0.3s; cursor: pointer; }
-        .code-item:hover { background: rgba(106, 78, 255, 0.2); transform: scale(1.05); border-color: #6a4eff; }
 
         .stats { display: flex; justify-content: center; gap: 30px; margin-top: 15px; flex-wrap: wrap; }
         .stat-item { text-align: center; padding: 8px 20px; background: rgba(255,255,255,0.05); border-radius: 20px; backdrop-filter: blur(5px); }
@@ -272,7 +268,7 @@
         <div class="stats">
             <div class="stat-item"><div class="stat-number">3,337</div><div class="stat-label">скачиваний</div></div>
             <div class="stat-item"><div class="stat-number">4+</div><div class="stat-label">читов</div></div>
-            <div class="stat-item"><div class="stat-number">7+</div><div class="stat-label">кодов</div></div>
+            <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">поддержка</div></div>
         </div>
     </div>
 
@@ -281,7 +277,6 @@
         <div class="tab-btn" data-tab="radio">🎵 РАДИО</div>
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
         <div class="tab-btn" data-tab="info">ℹ️ ИНФО</div>
-        <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
     </div>
 
     <div id="tab-cheats" class="glass-card" style="display: block;">
@@ -324,7 +319,7 @@
             <div class="step"><div class="step-number">1</div><div class="step-text"><strong>Скачай AMBI LOADER</strong><br>Нажми кнопку "Скачать" — получишь архив AmbiLoader.zip</div></div>
             <div class="step"><div class="step-number">2</div><div class="step-text"><strong>Распакуй архив</strong><br>Внутри папка Avatars и AmbiLoader.exe — извлеки их в любое место</div></div>
             <div class="step"><div class="step-number">3</div><div class="step-text"><strong>Запусти AmbiLoader.exe</strong><br>При первом запуске может попросить права администратора</div></div>
-            <div class="step"><div class="step-number">4</div><div class="step-text"><strong>Введи лицензионный ключ</strong><br>Ключи: AmbiLEGENDA, AmbiLOX, AmbiKingII, XD, xD, RONALDO, SU</div></div>
+            <div class="step"><div class="step-number">4</div><div class="step-text"><strong>Войди в аккаунт</strong><br>Используй свою учётную запись с этого сайта</div></div>
             <div class="step"><div class="step-number">5</div><div class="step-text"><strong>Выбери чит и нажми LOAD</strong><br>Лоудер сам скачает и установит всё необходимое</div></div>
             <div class="step"><div class="step-number">6</div><div class="step-text"><strong>Запускай CS:GO и наслаждайся!</strong><br>Чит автоматически инжектится в игру</div></div>
         </div>
@@ -333,24 +328,10 @@
     <div id="tab-info" class="glass-card" style="display: none;">
         <h2 style="margin-bottom: 15px; text-align: center;">ℹ️ О ПРОЕКТЕ</h2>
         <div class="info-content">
-            <div class="info-row"><div class="info-icon">🚀</div><div><strong>AMBI LOADER</strong> — универсальный загрузчик для CS:GO, объединяющий несколько популярных читов. Всё, что нужно — скачать лоудер, ввести ключ и нажать LOAD.</div></div>
-            <div class="info-row"><div class="info-icon">⚡</div><div><strong>Преимущества:</strong> автоматическая установка, регулярные обновления, красивый неоновый интерфейс, множество ключей активации.</div></div>
+            <div class="info-row"><div class="info-icon">🚀</div><div><strong>AMBI LOADER</strong> — универсальный загрузчик для CS:GO, объединяющий несколько популярных читов. Всё, что нужно — скачать лоудер, войти в аккаунт и нажать LOAD.</div></div>
+            <div class="info-row"><div class="info-icon">⚡</div><div><strong>Преимущества:</strong> автоматическая установка, регулярные обновления, красивый неоновый интерфейс, облачная авторизация.</div></div>
             <div class="info-row"><div class="info-icon">🛡️</div><div><strong>ВАЖНО:</strong> Запускай лоудер от имени администратора. Отключи антивирус или добавь папку в исключения. Используй только для обучения и тестирования.</div></div>
         </div>
-    </div>
-
-    <div id="tab-codes" class="glass-card" style="display: none;">
-        <h2 style="margin-bottom: 15px; text-align: center;">🔑 ДОСТУПНЫЕ КЛЮЧИ АКТИВАЦИИ</h2>
-        <div class="codes-grid">
-            <div class="code-item" data-code="AmbiLEGENDA">🏆 AmbiLEGENDA</div>
-            <div class="code-item" data-code="AmbiLOX">🦊 AmbiLOX</div>
-            <div class="code-item" data-code="AmbiKingII">👑 AmbiKingII</div>
-            <div class="code-item" data-code="XD">😆 XD</div>
-            <div class="code-item" data-code="xD">😜 xD</div>
-            <div class="code-item" data-code="RONALDO">⚽ RONALDO</div>
-            <div class="code-item" data-code="SU">🇷🇺 SU</div>
-        </div>
-        <p style="text-align: center; margin-top: 15px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
 </div>
 
@@ -377,6 +358,7 @@
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
+    // Глобальная функция для YouTube API
     function onYouTubeIframeAPIReady() {
         window.dispatchEvent(new Event('youtube-ready'));
     }
@@ -575,27 +557,18 @@
         setTimeout(() => t.remove(), 2000);
     }
 
-    // Копирование ключей
-    document.querySelectorAll('.code-item').forEach(el => {
-        el.addEventListener('click', () => {
-            navigator.clipboard.writeText(el.getAttribute('data-code'));
-            showToast(`✅ Ключ "${el.getAttribute('data-code')}" скопирован!`);
-        });
-    });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
     // YouTube Radio
     const playlist = [
-        { id: "nE0LqrB-vvY", title: "Трек 1" },
-        { id: "mz95kGOCq10", title: "Трек 2" },
-        { id: "7n9wvC_fyq0", title: "Трек 3" },
-        { id: "CNGE3sFBjys", title: "Трек 4" },
-        { id: "YAjb2dIAfoo", title: "Трек 5" },
-        { id: "XPCY9O1onGQ", title: "Трек 6" },
-        { id: "tn2vbytgvpk", title: "Трек 7" }
+        { id: "jfKfPfyJRdk", title: "lofi hip hop radio 📚" },
+        { id: "5qap5aO4i9A", title: "jazz/lofi hip hop radio 🎷" },
+        { id: "DWcJFNfaw9c", title: "synthwave radio 🌌" },
+        { id: "4xDzrJKXOOY", title: "retrowave / synthwave mix" }
     ];
     let currentTrackIndex = 0;
-    let player, isPlaying = false;
+    let player;
+    let isPlaying = false;
     const playPauseBtn = document.getElementById('playPauseBtn');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -702,8 +675,7 @@
         cheats: document.getElementById('tab-cheats'),
         radio: document.getElementById('tab-radio'),
         install: document.getElementById('tab-install'),
-        info: document.getElementById('tab-info'),
-        codes: document.getElementById('tab-codes')
+        info: document.getElementById('tab-info')
     };
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -734,14 +706,12 @@
             return;
         }
         try {
-            // Пытаемся сначала запрос с where (требует индекс)
             const q = query(collection(db, "users"), where("email", "==", email));
             const snapshot = await getDocs(q);
             if (!snapshot.empty) {
                 displayUser(snapshot.docs[0].data(), email);
                 return;
             }
-            // Если не найдено, пробуем перебор (fallback, медленно, но работает без индекса)
             const allSnapshot = await getDocs(collection(db, "users"));
             let found = null;
             allSnapshot.forEach(doc => {
@@ -754,9 +724,7 @@
             }
         } catch (error) {
             console.error(error);
-            searchResult.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска (возможно, нет индекса)</p>';
-            // Показываем подсказку создать индекс
-            searchResult.innerHTML += '<p style="font-size:0.8rem; margin-top:10px;">Создайте составной индекс для поля `email` в Firestore.</p>';
+            searchResult.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска</p>';
         }
     }
 
