@@ -617,18 +617,14 @@ window.addEventListener('youtube-ready', () => {
             playsinline: 1
         },
         events: {
-            onReady: (event) => {
-                player.setVolume(volumeSlider.value * 100);
-                currentTrackEl.textContent = playlist[0].title;
-                // Принудительно запускаем воспроизведение
-                setTimeout(() => {
-                    player.playVideo();
-                    isPlaying = true;
-                    playPauseBtn.textContent = '⏸';
-                }, 100);
-                loadPlaylist();
-            },
-            onStateChange: (event) => {
+onReady: () => {
+    player.setVolume(volumeSlider.value * 100);
+    currentTrackEl.textContent = playlist[0].title;
+    // НЕ ЗАПУСКАЕМ АВТОМАТИЧЕСКИ – ждём нажатия Play
+    playPauseBtn.textContent = '▶';  // кнопка показывает Play
+    isPlaying = false;
+    loadPlaylist();
+}            onStateChange: (event) => {
                 if (event.data === YT.PlayerState.ENDED) {
                     nextTrack();
                 }
