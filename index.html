@@ -7,15 +7,17 @@
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
-        body { background: #0a0a0f; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; position: relative; min-height: 100vh; cursor: none !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a0f; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; position: relative; min-height: 100vh; }
         ::-webkit-scrollbar { width: 0; background: transparent; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* Кастомный курсор (по умолчанию включён, без инерции) */
         .custom-cursor { position: fixed; width: 32px; height: 32px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); will-change: left, top; filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8)); }
         .cursor-arrow { position: absolute; width: 0; height: 0; border-left: 12px solid #6a4eff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; top: 2px; left: 2px; filter: drop-shadow(0 0 4px #6a4eff); }
         .cursor-glow { position: absolute; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(106, 78, 255, 0.4), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: glowPulse 2s infinite; }
         @keyframes glowPulse { 0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } }
+        body.custom-cursor-disabled .custom-cursor { display: none; }
 
         .gradient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(106, 78, 255, 0.15), transparent 50%), radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.15), transparent 50%), radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1), transparent 50%); z-index: 0; pointer-events: none; }
         .neon-ball { position: fixed; border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 0; animation: float 15s infinite ease-in-out; }
@@ -26,8 +28,8 @@
         @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.8); } }
 
         .header { position: fixed; top: 20px; left: 20px; right: 80px; z-index: 100; display: flex; align-items: center; gap: 15px; }
-        .login-btn { margin-left: auto; background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .login-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
+        .login-btn, .profile-btn { margin-left: auto; background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .login-btn:hover, .profile-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
         .settings-btn { position: fixed; top: 20px; right: 20px; width: 50px; height: 50px; background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 101; border: 1px solid rgba(106, 78, 255, 0.3); transition: all 0.3s; font-size: 24px; }
         .settings-btn:hover { transform: rotate(90deg); border-color: #6a4eff; box-shadow: 0 0 25px rgba(106, 78, 255, 0.5); }
         .settings-panel { position: fixed; top: 80px; right: 20px; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); transform: translateX(400px); transition: transform 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -161,7 +163,7 @@
 </div>
 
 <div class="header">
-    <div class="login-btn" id="showAuthBtn">🔐 ВОЙТИ</div>
+    <button class="login-btn" id="authActionBtn">🔐 ВОЙТИ</button>
 </div>
 
 <div class="settings-btn" id="settingsBtn">⚙️</div>
@@ -179,6 +181,9 @@
         <option value="pink">💗 Розовая</option>
         <option value="green">💚 Зеленая</option>
     </select>
+    <label style="margin-top: 15px;">
+        <input type="checkbox" id="disableCursorCheck"> Отключить кастомный курсор
+    </label>
 </div>
 
 <div class="auth-modal" id="authModal">
@@ -193,8 +198,8 @@
         </div>
         <form id="loginForm" class="auth-form active">
             <div class="input-group">
-                <input type="text" id="loginUsername" placeholder="Username or Email" required>
-                <span class="input-icon">👤</span>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <span class="input-icon">📧</span>
             </div>
             <div class="input-group">
                 <input type="password" id="loginPassword" placeholder="Password" required>
@@ -247,7 +252,6 @@
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
         <div class="tab-btn" data-tab="info">ℹ️ ИНФО</div>
         <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
-        <div class="tab-btn" data-tab="profile">👤 ПРОФИЛЬ</div>
     </div>
 
     <div id="tab-cheats" class="glass-card" style="display: block;">
@@ -318,27 +322,6 @@
         </div>
         <p style="text-align: center; margin-top: 15px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
-
-    <div id="tab-profile" class="glass-card" style="display: none;">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <img id="avatarImg" src="https://via.placeholder.com/120/6a4eff/ffffff?text=?" alt="Avatar">
-                <label for="avatarUpload" class="avatar-upload-btn">📷</label>
-                <input type="file" id="avatarUpload" accept="image/*">
-            </div>
-            <div class="profile-info">
-                <h3 id="profileDisplayName">Гость</h3>
-                <p id="profileEmail">Не авторизован</p>
-                <div class="profile-stats">
-                    <div class="profile-stat"><div class="num" id="downloadsCount">0</div><div>Скачиваний</div></div>
-                    <div class="profile-stat"><div class="num" id="cheatsCount">0</div><div>Читов</div></div>
-                </div>
-            </div>
-        </div>
-        <div style="margin-top: 20px;">
-            <button class="auth-submit" id="logoutBtn" style="width: auto; padding: 12px 30px;">🚪 Выйти</button>
-        </div>
-    </div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
@@ -365,22 +348,30 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // === КАСТОМНЫЙ КУРСОР (РЕЗКИЙ) ===
     const cursor = document.getElementById('customCursor');
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-    document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-    function animateCursor() {
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        requestAnimationFrame(animateCursor);
+    const disableCursorCheck = document.getElementById('disableCursorCheck');
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!document.body.classList.contains('custom-cursor-disabled')) {
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        }
+    });
+    disableCursorCheck.addEventListener('change', (e) => {
+        document.body.classList.toggle('custom-cursor-disabled', e.target.checked);
+        localStorage.setItem('cursor_disabled', e.target.checked);
+    });
+    if (localStorage.getItem('cursor_disabled') === 'true') {
+        disableCursorCheck.checked = true;
+        document.body.classList.add('custom-cursor-disabled');
     }
-    animateCursor();
-    document.body.style.cursor = 'none';
-    document.querySelectorAll('*').forEach(el => el.style.cursor = 'none');
 
+    // === АВТОРИЗАЦИЯ ===
     const authModal = document.getElementById('authModal');
-    const showAuthBtn = document.getElementById('showAuthBtn');
+    const authActionBtn = document.getElementById('authActionBtn');
     const closeAuth = document.getElementById('closeAuth');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -388,15 +379,21 @@
     const showRegisterTab = document.getElementById('showRegisterTab');
     const showLoginTab = document.getElementById('showLoginTab');
     const forgotLink = document.getElementById('forgotPasswordLink');
-    const loginBtnHeader = document.querySelector('.login-btn');
-    const profileDisplayName = document.getElementById('profileDisplayName');
-    const profileEmail = document.getElementById('profileEmail');
     const avatarImg = document.getElementById('avatarImg');
     const avatarUpload = document.getElementById('avatarUpload');
+    const profileDisplayName = document.getElementById('profileDisplayName');
+    const profileEmail = document.getElementById('profileEmail');
 
     function openModal() { authModal.classList.add('active'); }
     function closeModal() { authModal.classList.remove('active'); }
-    showAuthBtn.addEventListener('click', openModal);
+    authActionBtn.addEventListener('click', () => {
+        if (auth.currentUser) {
+            // Открываем профиль (вкладка профиля)
+            document.querySelector('.tab-btn[data-tab="profile"]')?.click();
+        } else {
+            openModal();
+        }
+    });
     closeAuth.addEventListener('click', closeModal);
     authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModal(); });
 
@@ -412,10 +409,10 @@
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const usernameOrEmail = document.getElementById('loginUsername').value;
+        const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
         try {
-            await signInWithEmailAndPassword(auth, usernameOrEmail, password);
+            await signInWithEmailAndPassword(auth, email, password);
             closeModal();
             showToast(`✅ Добро пожаловать!`);
         } catch (error) {
@@ -448,17 +445,14 @@
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             const displayName = user.displayName || user.email.split('@')[0];
-            loginBtnHeader.textContent = `👤 ${displayName}`;
-            loginBtnHeader.title = user.email;
-            profileDisplayName.textContent = displayName;
-            profileEmail.textContent = user.email;
+            authActionBtn.textContent = `👤 ${displayName}`;
+            authActionBtn.title = user.email;
+            if (profileDisplayName) profileDisplayName.textContent = displayName;
+            if (profileEmail) profileEmail.textContent = user.email;
             
             const cachedAvatar = localStorage.getItem(`avatar_${user.uid}`);
-            if (cachedAvatar) {
-                avatarImg.src = cachedAvatar;
-            } else {
-                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
-            }
+            if (cachedAvatar) avatarImg.src = cachedAvatar;
+            else avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
             
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -466,18 +460,15 @@
                     const base64 = userDoc.data().avatarBase64;
                     avatarImg.src = base64;
                     localStorage.setItem(`avatar_${user.uid}`, base64);
-                } else {
-                    const generatedUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
-                    avatarImg.src = generatedUrl;
                 }
             } catch (error) {
-                console.warn("Firestore fetch failed, using cached/local avatar");
+                console.warn("Firestore fetch failed");
             }
         } else {
-            loginBtnHeader.textContent = '🔐 ВОЙТИ';
-            loginBtnHeader.title = '';
-            profileDisplayName.textContent = 'Гость';
-            profileEmail.textContent = 'Не авторизован';
+            authActionBtn.textContent = '🔐 ВОЙТИ';
+            authActionBtn.title = '';
+            if (profileDisplayName) profileDisplayName.textContent = 'Гость';
+            if (profileEmail) profileEmail.textContent = 'Не авторизован';
             avatarImg.src = 'https://via.placeholder.com/120/6a4eff/ffffff?text=?';
         }
     });
@@ -485,14 +476,11 @@
     avatarUpload.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file || !auth.currentUser) return;
-        
         const reader = new FileReader();
         reader.onload = async (event) => {
             const base64 = event.target.result;
             try {
-                await setDoc(doc(db, "users", auth.currentUser.uid), {
-                    avatarBase64: base64
-                }, { merge: true });
+                await setDoc(doc(db, "users", auth.currentUser.uid), { avatarBase64: base64 }, { merge: true });
                 avatarImg.src = base64;
                 localStorage.setItem(`avatar_${auth.currentUser.uid}`, base64);
                 showToast('✅ Аватарка обновлена!');
@@ -503,21 +491,6 @@
         reader.readAsDataURL(file);
     });
 
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-        if (auth.currentUser) {
-            localStorage.removeItem(`avatar_${auth.currentUser.uid}`);
-        }
-        await signOut(auth);
-        showToast('🚪 Вы вышли');
-    });
-    loginBtnHeader.addEventListener('dblclick', async () => {
-        if (auth.currentUser) {
-            localStorage.removeItem(`avatar_${auth.currentUser.uid}`);
-            await signOut(auth);
-            showToast('🚪 Вы вышли из аккаунта');
-        }
-    });
-
     function showToast(msg) {
         const t = document.createElement('div');
         t.className = 'toast';
@@ -526,6 +499,7 @@
         setTimeout(() => t.remove(), 2000);
     }
 
+    // === КОПИРОВАНИЕ КЛЮЧЕЙ ===
     document.querySelectorAll('.code-item').forEach(el => {
         el.addEventListener('click', () => {
             navigator.clipboard.writeText(el.getAttribute('data-code'));
@@ -534,7 +508,7 @@
     });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
-    // YouTube Radio
+    // === YOUTUBE РАДИО ===
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -545,8 +519,7 @@
         { id: "tn2vbytgvpk", title: "Трек 7" }
     ];
     let currentTrackIndex = 0;
-    let player;
-    let isPlaying = false;
+    let player, isPlaying = false;
     const playPauseBtn = document.getElementById('playPauseBtn');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -609,7 +582,7 @@
     volumeSlider.addEventListener('input', setVolume);
     loadPlaylist();
 
-    // Settings
+    // === НАСТРОЙКИ ===
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
@@ -647,7 +620,7 @@
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
-    // Tabs
+    // === ТАБЫ ===
     const btns = document.querySelectorAll('.tab-btn');
     const tabs = {
         cheats: document.getElementById('tab-cheats'),
@@ -667,7 +640,7 @@
         });
     });
 
-    // Background effects
+    // === ФОН ===
     function createNeonBalls() {
         const cont = document.getElementById('neon-balls');
         const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
