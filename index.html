@@ -32,13 +32,14 @@
         .auth-dropdown { position: relative; margin-left: auto; }
         .auth-btn { background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
         .auth-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
-        .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
-        .dropdown-menu.active { display: block; }
-        .dropdown-menu .menu-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; color: white; }
-        .dropdown-menu .menu-item:hover { background: rgba(106, 78, 255, 0.2); }
+        .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; opacity: 0; transform: translateY(-10px); transition: opacity 0.2s, transform 0.2s; }
+        .dropdown-menu.active { display: block; opacity: 1; transform: translateY(0); }
+        .dropdown-menu .menu-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; color: white; }
+        .dropdown-menu .menu-item:hover { background: rgba(106, 78, 255, 0.2); transform: translateX(5px); }
         .dropdown-menu hr { margin: 10px 0; border: 0.5px solid rgba(106, 78, 255, 0.2); }
         .profile-mini { display: flex; align-items: center; gap: 15px; padding: 10px; }
-        .profile-mini img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #6a4eff; }
+        .profile-mini img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #6a4eff; transition: transform 0.2s; }
+        .profile-mini img:hover { transform: scale(1.05); }
         .profile-mini-info h4 { font-size: 1rem; margin-bottom: 2px; }
         .profile-mini-info p { font-size: 0.8rem; opacity: 0.7; }
 
@@ -149,7 +150,7 @@
         .search-fab:hover { transform: scale(1.1); }
         .search-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; }
         .search-modal.active { display: flex; }
-        .search-card { width: 400px; background: rgba(20,20,40,0.9); border-radius: 30px; padding: 30px; }
+        .search-card { width: 400px; background: rgba(20,20,40,0.9); border-radius: 30px; padding: 30px; animation: modalPop 0.3s; }
         .search-card h3 { margin-bottom: 20px; color: #6a4eff; }
         .search-result { margin-top: 20px; }
 
@@ -583,7 +584,7 @@
     });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
-    // YouTube Radio (без изменений)
+    // YouTube Radio
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -657,7 +658,7 @@
     volumeSlider.addEventListener('input', setVolume);
     loadPlaylist();
 
-    // Настройки (без изменений)
+    // Настройки
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
@@ -714,7 +715,7 @@
         });
     });
 
-    // Тестовый поиск пользователей (модальное окно)
+    // Тестовый поиск пользователей
     const searchFab = document.getElementById('searchFab');
     const searchModal = document.getElementById('searchModal');
     const closeSearchModal = document.getElementById('closeSearchModal');
@@ -726,35 +727,54 @@
     closeSearchModal.addEventListener('click', () => searchModal.classList.remove('active'));
     searchModal.addEventListener('click', (e) => { if (e.target === searchModal) searchModal.classList.remove('active'); });
 
-    searchUserBtn.addEventListener('click', async () => {
+    async function performSearch() {
         const email = searchEmailInput.value.trim();
         if (!email) {
             searchResult.innerHTML = '<p style="color: #ff6b6b;">Введите email</p>';
             return;
         }
         try {
+            // Пытаемся сначала запрос с where (требует индекс)
             const q = query(collection(db, "users"), where("email", "==", email));
             const snapshot = await getDocs(q);
-            if (snapshot.empty) {
-                searchResult.innerHTML = '<p style="color: #ff6b6b;">Пользователь не найден</p>';
+            if (!snapshot.empty) {
+                displayUser(snapshot.docs[0].data(), email);
+                return;
+            }
+            // Если не найдено, пробуем перебор (fallback, медленно, но работает без индекса)
+            const allSnapshot = await getDocs(collection(db, "users"));
+            let found = null;
+            allSnapshot.forEach(doc => {
+                if (doc.data().email === email) found = doc.data();
+            });
+            if (found) {
+                displayUser(found, email);
             } else {
-                const userData = snapshot.docs[0].data();
-                const avatar = userData.avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.displayName)}&background=6a4eff&color=fff&size=60`;
-                searchResult.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(106,78,255,0.1); border-radius: 15px;">
-                        <img src="${avatar}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #6a4eff;">
-                        <div>
-                            <h4>${userData.displayName}</h4>
-                            <p style="opacity: 0.7;">${email}</p>
-                        </div>
-                    </div>
-                `;
+                searchResult.innerHTML = '<p style="color: #ff6b6b;">Пользователь не найден</p>';
             }
         } catch (error) {
-            searchResult.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска (возможно, нет прав)</p>';
             console.error(error);
+            searchResult.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска (возможно, нет индекса)</p>';
+            // Показываем подсказку создать индекс
+            searchResult.innerHTML += '<p style="font-size:0.8rem; margin-top:10px;">Создайте составной индекс для поля `email` в Firestore.</p>';
         }
-    });
+    }
+
+    function displayUser(userData, email) {
+        const avatar = userData.avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.displayName)}&background=6a4eff&color=fff&size=60`;
+        searchResult.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(106,78,255,0.1); border-radius: 15px;">
+                <img src="${avatar}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #6a4eff;">
+                <div>
+                    <h4>${userData.displayName}</h4>
+                    <p style="opacity: 0.7;">${email}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    searchUserBtn.addEventListener('click', performSearch);
+    searchEmailInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') performSearch(); });
 
     // Фон
     function createNeonBalls() {
