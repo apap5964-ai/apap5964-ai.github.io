@@ -12,7 +12,6 @@
         ::-webkit-scrollbar { width: 0; background: transparent; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Кастомный курсор */
         .custom-cursor { position: fixed; width: 32px; height: 32px; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); will-change: left, top; filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8)); }
         .cursor-arrow { position: absolute; width: 0; height: 0; border-left: 12px solid #6a4eff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; top: 2px; left: 2px; filter: drop-shadow(0 0 4px #6a4eff); }
         .cursor-glow { position: absolute; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(106, 78, 255, 0.4), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: glowPulse 2s infinite; }
@@ -28,8 +27,19 @@
         @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.8); } }
 
         .header { position: fixed; top: 20px; left: 20px; right: 80px; z-index: 100; display: flex; align-items: center; gap: 15px; }
-        .login-btn, .profile-btn { margin-left: auto; background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .login-btn:hover, .profile-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
+        .auth-dropdown { position: relative; margin-left: auto; }
+        .auth-btn { background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(106, 78, 255, 0.3); padding: 10px 25px; border-radius: 60px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .auth-btn:hover { border-color: #6a4eff; box-shadow: 0 0 20px rgba(106,78,255,0.4); transform: translateY(-3px); }
+        .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
+        .dropdown-menu.active { display: block; }
+        .dropdown-menu .menu-item { padding: 12px 15px; border-radius: 12px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; color: white; }
+        .dropdown-menu .menu-item:hover { background: rgba(106, 78, 255, 0.2); }
+        .dropdown-menu hr { margin: 10px 0; border: 0.5px solid rgba(106, 78, 255, 0.2); }
+        .profile-mini { display: flex; align-items: center; gap: 15px; padding: 10px; }
+        .profile-mini img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #6a4eff; }
+        .profile-mini-info h4 { font-size: 1rem; margin-bottom: 2px; }
+        .profile-mini-info p { font-size: 0.8rem; opacity: 0.7; }
+
         .settings-btn { position: fixed; top: 20px; right: 20px; width: 50px; height: 50px; background: rgba(20, 20, 35, 0.8); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 101; border: 1px solid rgba(106, 78, 255, 0.3); transition: all 0.3s; font-size: 24px; }
         .settings-btn:hover { transform: rotate(90deg); border-color: #6a4eff; box-shadow: 0 0 25px rgba(106, 78, 255, 0.5); }
         .settings-panel { position: fixed; top: 80px; right: 20px; width: 280px; background: rgba(10, 10, 20, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; z-index: 99; border: 1px solid rgba(106, 78, 255, 0.3); transform: translateX(400px); transition: transform 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -144,6 +154,13 @@
         .profile-stat { text-align: center; }
         .profile-stat .num { font-size: 1.5rem; font-weight: 700; color: #6a4eff; }
 
+        .search-section { margin-top: 30px; padding: 20px; background: rgba(20,20,40,0.5); border-radius: 20px; }
+        .search-section h3 { margin-bottom: 15px; }
+        .search-box { display: flex; gap: 10px; }
+        .search-box input { flex: 1; padding: 12px 20px; background: rgba(10,10,20,0.6); border: 1px solid rgba(106,78,255,0.3); border-radius: 40px; color: white; outline: none; }
+        .search-box button { padding: 12px 25px; background: linear-gradient(135deg, #6a4eff, #a855f7); border: none; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; }
+        .search-result { margin-top: 15px; }
+
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #6a4eff, #a855f7); color: white; padding: 10px 20px; border-radius: 50px; z-index: 1000; font-weight: bold; font-size: 0.9rem; box-shadow: 0 0 20px rgba(106,78,255,0.5); animation: toastFade 2s ease-out forwards; }
         @keyframes toastFade { 0% { opacity: 0; transform: translateX(-50%) translateY(20px); } 20% { opacity: 1; transform: translateX(-50%) translateY(0); } 80% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(-20px); } }
 
@@ -163,7 +180,29 @@
 </div>
 
 <div class="header">
-    <button class="login-btn" id="authActionBtn">🔐 ВОЙТИ</button>
+    <div class="auth-dropdown">
+        <button class="auth-btn" id="authActionBtn">🔐 ВОЙТИ</button>
+        <div class="dropdown-menu" id="authDropdown">
+            <!-- гость -->
+            <div id="guestMenu">
+                <div class="menu-item" id="menuLogin">🔑 Войти</div>
+                <div class="menu-item" id="menuRegister">📝 Регистрация</div>
+            </div>
+            <!-- пользователь -->
+            <div id="userMenu" style="display: none;">
+                <div class="profile-mini">
+                    <img id="dropdownAvatar" src="https://via.placeholder.com/45" alt="Ava">
+                    <div class="profile-mini-info">
+                        <h4 id="dropdownName">Гость</h4>
+                        <p id="dropdownEmail"></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="menu-item" id="menuProfile">👤 Мой профиль</div>
+                <div class="menu-item" id="menuLogout">🚪 Выйти</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="settings-btn" id="settingsBtn">⚙️</div>
@@ -343,6 +382,15 @@
         <div style="margin-top: 20px;">
             <button class="auth-submit" id="logoutBtn" style="width: auto; padding: 12px 30px;">🚪 Выйти</button>
         </div>
+        <!-- Тестовая функция: поиск пользователя по email -->
+        <div class="search-section">
+            <h3>🔍 Тестовый поиск пользователя</h3>
+            <div class="search-box">
+                <input type="email" id="searchEmail" placeholder="Введите email пользователя">
+                <button id="searchUserBtn">Найти</button>
+            </div>
+            <div id="searchResult" class="search-result"></div>
+        </div>
     </div>
 </div>
 
@@ -355,7 +403,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDCaTAB8wBL-VyFXwo5UlBUwwb51LRb2a4",
@@ -388,9 +436,31 @@
         document.body.classList.add('custom-cursor-disabled');
     }
 
-    // Умная кнопка входа/профиля
-    const authActionBtn = document.getElementById('authActionBtn');
+    // Dropdown
+    const authBtn = document.getElementById('authActionBtn');
+    const dropdown = document.getElementById('authDropdown');
+    const guestMenu = document.getElementById('guestMenu');
+    const userMenu = document.getElementById('userMenu');
+    const dropdownAvatar = document.getElementById('dropdownAvatar');
+    const dropdownName = document.getElementById('dropdownName');
+    const dropdownEmail = document.getElementById('dropdownEmail');
+    const menuLogin = document.getElementById('menuLogin');
+    const menuRegister = document.getElementById('menuRegister');
+    const menuProfile = document.getElementById('menuProfile');
+    const menuLogout = document.getElementById('menuLogout');
     const profileTabBtn = document.getElementById('profileTabBtn');
+
+    authBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+        if (!authBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Модалки
     const authModal = document.getElementById('authModal');
     const closeAuth = document.getElementById('closeAuth');
     const loginForm = document.getElementById('loginForm');
@@ -405,15 +475,8 @@
     const profileEmail = document.getElementById('profileEmail');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    function openModal() { authModal.classList.add('active'); }
+    function openModal() { authModal.classList.add('active'); dropdown.classList.remove('active'); }
     function closeModalFn() { authModal.classList.remove('active'); }
-    authActionBtn.addEventListener('click', () => {
-        if (auth.currentUser) {
-            profileTabBtn.click();
-        } else {
-            openModal();
-        }
-    });
     closeAuth.addEventListener('click', closeModalFn);
     authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModalFn(); });
 
@@ -426,6 +489,15 @@
     showRegisterTab.addEventListener('click', (e) => { e.preventDefault(); switchTab('register'); });
     showLoginTab.addEventListener('click', (e) => { e.preventDefault(); switchTab('login'); });
     forgotLink.addEventListener('click', (e) => { e.preventDefault(); alert('🔐 Восстановление пароля появится позже'); });
+
+    menuLogin.addEventListener('click', () => { openModal(); switchTab('login'); });
+    menuRegister.addEventListener('click', () => { openModal(); switchTab('register'); });
+    menuProfile.addEventListener('click', () => { profileTabBtn.click(); dropdown.classList.remove('active'); });
+    menuLogout.addEventListener('click', async () => {
+        await signOut(auth);
+        showToast('🚪 Вы вышли');
+        dropdown.classList.remove('active');
+    });
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -465,31 +537,46 @@
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             const displayName = user.displayName || user.email.split('@')[0];
-            authActionBtn.textContent = `👤 ${displayName}`;
+            authBtn.innerHTML = `👤 ${displayName}`;
+            guestMenu.style.display = 'none';
+            userMenu.style.display = 'block';
             profileTabBtn.style.display = 'block';
-            profileDisplayName.textContent = displayName;
-            profileEmail.textContent = user.email;
+            
+            dropdownName.textContent = displayName;
+            dropdownEmail.textContent = user.email;
             
             const cachedAvatar = localStorage.getItem(`avatar_${user.uid}`);
-            if (cachedAvatar) avatarImg.src = cachedAvatar;
-            else avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
+            if (cachedAvatar) {
+                avatarImg.src = cachedAvatar;
+                dropdownAvatar.src = cachedAvatar;
+            } else {
+                avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=120`;
+                dropdownAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=6a4eff&color=fff&size=45`;
+            }
+            
+            profileDisplayName.textContent = displayName;
+            profileEmail.textContent = user.email;
             
             try {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists() && userDoc.data().avatarBase64) {
                     const base64 = userDoc.data().avatarBase64;
                     avatarImg.src = base64;
+                    dropdownAvatar.src = base64;
                     localStorage.setItem(`avatar_${user.uid}`, base64);
                 }
             } catch (error) {
                 console.warn("Firestore fetch failed");
             }
         } else {
-            authActionBtn.textContent = '🔐 ВОЙТИ';
+            authBtn.innerHTML = '🔐 ВОЙТИ';
+            guestMenu.style.display = 'block';
+            userMenu.style.display = 'none';
             profileTabBtn.style.display = 'none';
             profileDisplayName.textContent = 'Гость';
             profileEmail.textContent = 'Не авторизован';
             avatarImg.src = 'https://via.placeholder.com/120/6a4eff/ffffff?text=?';
+            dropdownAvatar.src = 'https://via.placeholder.com/45';
         }
     });
 
@@ -502,6 +589,7 @@
             try {
                 await setDoc(doc(db, "users", auth.currentUser.uid), { avatarBase64: base64 }, { merge: true });
                 avatarImg.src = base64;
+                dropdownAvatar.src = base64;
                 localStorage.setItem(`avatar_${auth.currentUser.uid}`, base64);
                 showToast('✅ Аватарка обновлена!');
             } catch (error) {
@@ -514,6 +602,38 @@
     logoutBtn.addEventListener('click', async () => {
         await signOut(auth);
         showToast('🚪 Вы вышли');
+    });
+
+    // Тестовый поиск пользователя по email
+    document.getElementById('searchUserBtn').addEventListener('click', async () => {
+        const email = document.getElementById('searchEmail').value.trim();
+        const resultDiv = document.getElementById('searchResult');
+        if (!email) {
+            resultDiv.innerHTML = '<p style="color: #ff6b6b;">Введите email</p>';
+            return;
+        }
+        try {
+            const q = query(collection(db, "users"), where("email", "==", email));
+            const snapshot = await getDocs(q);
+            if (snapshot.empty) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b;">Пользователь не найден</p>';
+            } else {
+                const userData = snapshot.docs[0].data();
+                const avatar = userData.avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.displayName)}&background=6a4eff&color=fff&size=60`;
+                resultDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(106,78,255,0.1); border-radius: 15px;">
+                        <img src="${avatar}" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #6a4eff;">
+                        <div>
+                            <h4>${userData.displayName}</h4>
+                            <p style="opacity: 0.7;">${email}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            resultDiv.innerHTML = '<p style="color: #ff6b6b;">Ошибка поиска</p>';
+            console.error(error);
+        }
     });
 
     function showToast(msg) {
@@ -533,7 +653,7 @@
     });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
-    // YouTube Radio
+    // YouTube Radio (без изменений)
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -607,7 +727,7 @@
     volumeSlider.addEventListener('input', setVolume);
     loadPlaylist();
 
-    // Настройки
+    // Настройки (без изменений)
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
