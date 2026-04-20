@@ -7,13 +7,13 @@
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABs0lEQVR4nO2WMU/DMBCFvyZpg0pMrAwIgdgY+gMQYkDs/QMwsjAwMKEyVGWBiYmlA7AEIUCVpC5Nk7i2UydOUuOkMvGTfPbZd37vzj7rAADgPxAKBSJgYqAFAn1g7NxeAXfA9qcbAdfAE1AeC3gDjkZ+fwA2nGMG7ILdP+DAuS8BZTgvAJfAbiQQAJfA/vcDgHfgbCwQALfA2VggAO6As7FAANwDZ2OBALgHzsYCAfAInI0FAuAJOBsLBMALcDYWCIBX4GwsEABvwNlYIADegbOxQAA8AmdjgQB4Bs7GAgHwApyNBQLgBTgbCwTAK3A2FgiAd+BsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeBsLBAAGeDsD17NzqlJmBBTAAAAAElFTkSuQmCC">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #0a0a0f; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; position: relative; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        body { background: #0a0a0f; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; position: relative; min-height: 100vh; cursor: none !important; }
         ::-webkit-scrollbar { width: 0; background: transparent; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Кастомный курсор (по умолчанию включён, без инерции) */
-        .custom-cursor { position: fixed; width: 32px; height: 32px; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); will-change: left, top; filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8)); }
+        /* Кастомный курсор */
+        .custom-cursor { position: fixed; width: 32px; height: 32px; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); will-change: left, top; filter: drop-shadow(0 0 8px rgba(106, 78, 255, 0.8)); }
         .cursor-arrow { position: absolute; width: 0; height: 0; border-left: 12px solid #6a4eff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; top: 2px; left: 2px; filter: drop-shadow(0 0 4px #6a4eff); }
         .cursor-glow { position: absolute; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(106, 78, 255, 0.4), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: glowPulse 2s infinite; }
         @keyframes glowPulse { 0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } }
@@ -252,6 +252,7 @@
         <div class="tab-btn" data-tab="install">📥 УСТАНОВКА</div>
         <div class="tab-btn" data-tab="info">ℹ️ ИНФО</div>
         <div class="tab-btn" data-tab="codes">🔑 КОДЫ</div>
+        <div class="tab-btn" data-tab="profile" id="profileTabBtn" style="display: none;">👤 ПРОФИЛЬ</div>
     </div>
 
     <div id="tab-cheats" class="glass-card" style="display: block;">
@@ -322,6 +323,27 @@
         </div>
         <p style="text-align: center; margin-top: 15px; opacity: 0.7;">📋 Нажми на любой ключ, чтобы скопировать</p>
     </div>
+
+    <div id="tab-profile" class="glass-card" style="display: none;">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img id="avatarImg" src="https://via.placeholder.com/120/6a4eff/ffffff?text=?" alt="Avatar">
+                <label for="avatarUpload" class="avatar-upload-btn">📷</label>
+                <input type="file" id="avatarUpload" accept="image/*">
+            </div>
+            <div class="profile-info">
+                <h3 id="profileDisplayName">Гость</h3>
+                <p id="profileEmail">Не авторизован</p>
+                <div class="profile-stats">
+                    <div class="profile-stat"><div class="num" id="downloadsCount">0</div><div>Скачиваний</div></div>
+                    <div class="profile-stat"><div class="num" id="cheatsCount">0</div><div>Читов</div></div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="auth-submit" id="logoutBtn" style="width: auto; padding: 12px 30px;">🚪 Выйти</button>
+        </div>
+    </div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
@@ -348,16 +370,13 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // === КАСТОМНЫЙ КУРСОР (РЕЗКИЙ) ===
+    // Кастомный курсор
     const cursor = document.getElementById('customCursor');
     const disableCursorCheck = document.getElementById('disableCursorCheck');
-    let mouseX = 0, mouseY = 0;
     document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
         if (!document.body.classList.contains('custom-cursor-disabled')) {
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         }
     });
     disableCursorCheck.addEventListener('change', (e) => {
@@ -369,9 +388,10 @@
         document.body.classList.add('custom-cursor-disabled');
     }
 
-    // === АВТОРИЗАЦИЯ ===
-    const authModal = document.getElementById('authModal');
+    // Умная кнопка входа/профиля
     const authActionBtn = document.getElementById('authActionBtn');
+    const profileTabBtn = document.getElementById('profileTabBtn');
+    const authModal = document.getElementById('authModal');
     const closeAuth = document.getElementById('closeAuth');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -383,19 +403,19 @@
     const avatarUpload = document.getElementById('avatarUpload');
     const profileDisplayName = document.getElementById('profileDisplayName');
     const profileEmail = document.getElementById('profileEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     function openModal() { authModal.classList.add('active'); }
-    function closeModal() { authModal.classList.remove('active'); }
+    function closeModalFn() { authModal.classList.remove('active'); }
     authActionBtn.addEventListener('click', () => {
         if (auth.currentUser) {
-            // Открываем профиль (вкладка профиля)
-            document.querySelector('.tab-btn[data-tab="profile"]')?.click();
+            profileTabBtn.click();
         } else {
             openModal();
         }
     });
-    closeAuth.addEventListener('click', closeModal);
-    authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModal(); });
+    closeAuth.addEventListener('click', closeModalFn);
+    authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModalFn(); });
 
     function switchTab(tabId) {
         authTabs.forEach(t => t.classList.toggle('active', t.dataset.auth === tabId));
@@ -413,7 +433,7 @@
         const password = document.getElementById('loginPassword').value;
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            closeModal();
+            closeModalFn();
             showToast(`✅ Добро пожаловать!`);
         } catch (error) {
             alert('❌ Ошибка входа: ' + error.message);
@@ -435,7 +455,7 @@
                 email: email,
                 avatarBase64: ""
             });
-            closeModal();
+            closeModalFn();
             showToast(`🎉 Регистрация успешна! ${username}`);
         } catch (error) {
             alert('❌ Ошибка регистрации: ' + error.message);
@@ -446,9 +466,9 @@
         if (user) {
             const displayName = user.displayName || user.email.split('@')[0];
             authActionBtn.textContent = `👤 ${displayName}`;
-            authActionBtn.title = user.email;
-            if (profileDisplayName) profileDisplayName.textContent = displayName;
-            if (profileEmail) profileEmail.textContent = user.email;
+            profileTabBtn.style.display = 'block';
+            profileDisplayName.textContent = displayName;
+            profileEmail.textContent = user.email;
             
             const cachedAvatar = localStorage.getItem(`avatar_${user.uid}`);
             if (cachedAvatar) avatarImg.src = cachedAvatar;
@@ -466,9 +486,9 @@
             }
         } else {
             authActionBtn.textContent = '🔐 ВОЙТИ';
-            authActionBtn.title = '';
-            if (profileDisplayName) profileDisplayName.textContent = 'Гость';
-            if (profileEmail) profileEmail.textContent = 'Не авторизован';
+            profileTabBtn.style.display = 'none';
+            profileDisplayName.textContent = 'Гость';
+            profileEmail.textContent = 'Не авторизован';
             avatarImg.src = 'https://via.placeholder.com/120/6a4eff/ffffff?text=?';
         }
     });
@@ -491,6 +511,11 @@
         reader.readAsDataURL(file);
     });
 
+    logoutBtn.addEventListener('click', async () => {
+        await signOut(auth);
+        showToast('🚪 Вы вышли');
+    });
+
     function showToast(msg) {
         const t = document.createElement('div');
         t.className = 'toast';
@@ -499,7 +524,7 @@
         setTimeout(() => t.remove(), 2000);
     }
 
-    // === КОПИРОВАНИЕ КЛЮЧЕЙ ===
+    // Копирование ключей
     document.querySelectorAll('.code-item').forEach(el => {
         el.addEventListener('click', () => {
             navigator.clipboard.writeText(el.getAttribute('data-code'));
@@ -508,7 +533,7 @@
     });
     document.getElementById('downloadBtn').addEventListener('click', () => showToast('⬇️ Скачивание началось!'));
 
-    // === YOUTUBE РАДИО ===
+    // YouTube Radio
     const playlist = [
         { id: "nE0LqrB-vvY", title: "Трек 1" },
         { id: "mz95kGOCq10", title: "Трек 2" },
@@ -582,7 +607,7 @@
     volumeSlider.addEventListener('input', setVolume);
     loadPlaylist();
 
-    // === НАСТРОЙКИ ===
+    // Настройки
     const settingsBtn = document.getElementById('settingsBtn'), settingsPanel = document.getElementById('settingsPanel');
     const animSpeed = document.getElementById('animSpeed'), glowIntensity = document.getElementById('glowIntensity'), colorScheme = document.getElementById('colorScheme');
     settingsBtn.onclick = () => settingsPanel.classList.toggle('active');
@@ -620,7 +645,7 @@
     if(savedGlow){ glowIntensity.value = savedGlow; setGlow(savedGlow); }
     if(savedColor){ colorScheme.value = savedColor; setColor(savedColor); }
 
-    // === ТАБЫ ===
+    // Табы
     const btns = document.querySelectorAll('.tab-btn');
     const tabs = {
         cheats: document.getElementById('tab-cheats'),
@@ -640,7 +665,7 @@
         });
     });
 
-    // === ФОН ===
+    // Фон
     function createNeonBalls() {
         const cont = document.getElementById('neon-balls');
         const cols = ['#6a4eff', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
